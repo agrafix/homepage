@@ -1,0 +1,15 @@
+# Site settings
+title: Alexander Thiemann
+email: mail@athiemann.net
+description: > 
+  (functional) programmig and more
+baseurl: ""
+url: "http://athiemann.net"
+twitter_username: agrafix
+github_username:  agrafix
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+    input: GFM
