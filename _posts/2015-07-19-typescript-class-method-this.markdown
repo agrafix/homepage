@@ -50,6 +50,23 @@ This should be okay, be cause inside a method the compiler assumes that `this` i
 
 I've filed an [issue][gh-3927], let's see what the community and the typescript team thinks!
 
+### Update July 21, 2015
+
+Unfortunately the ES6 standard seems to define "broken" `this` semantics. TypeScript wants to strictly comply to the standard, so they probably will not change anything here (soon). We came up with a better proposal to fix the wrong `this` semantics which you could use as coding convention in your code:
+
+{% highlight javascript %}
+class Foo {
+    private bar: string = "Bar";
+
+    logBar = () => {
+        console.log("Bar's value is: " + this.bar);
+    }
+}
+{% endhighlight %}
+
+This is about 25% slower when called, but at least you get expected `this` semantics. Hopefully TypeScript will add proper `this`-typing to their type system soon.
+
+
 [cp]: http://www.checkpad.de
 [ts]: http://www.typescriptlang.org/
 [dts]: https://github.com/borisyankov/DefinitelyTyped
