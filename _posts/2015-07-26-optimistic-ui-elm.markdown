@@ -304,5 +304,5 @@ Looking forward to your Feedback on [Reddit][reddit-post] and [HackerNews][hn-po
 [elm-mailbox]: http://package.elm-lang.org/packages/elm-lang/core/2.1.0/Signal#Mailbox
 [elm-port]: http://elm-lang.org/guide/interop
 [elm-task]: http://package.elm-lang.org/packages/elm-lang/core/2.1.0/Task
-[reddit-post]: http://TODO
-[hn-post]: http://TODO2
+[reddit-post]: https://www.reddit.com/r/elm/comments/3enlub/optimistic_ui_and_reactive_programming_with_elm/
+[hn-post]: https://news.ycombinator.com/item?id=9950901
