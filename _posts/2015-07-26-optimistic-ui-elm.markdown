@@ -263,7 +263,7 @@ referenceProfileRow addr rp =
 Now we need to connect everything: 
 
 * Signals coming from the UI and the Server should go into our `update` function and fold over our `Model`
-* Signals coming from the UI should trigger custom logic that may send HTTP requests (`severQuery` mailbox)
+* Signals coming from the UI should trigger custom logic that may send HTTP requests (`serverQuery` mailbox)
 * The UI should not be able to send an empty (`Nothing`) signal.
 {% highlight haskell %}
 main : Signal Html
