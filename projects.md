@@ -10,6 +10,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 
 ### As Founder
 * [TramCloud][tc]
+* [Bahn-Buddy][bbuddy]
 * [ConfSchedule][cf]
 * [TabDo][tabdo]
 * [Manager's Life][managerslife]
@@ -33,6 +34,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [TribalWars Lan][twlan]
 
 [tc]: https://www.tramcloud.net
+[bbuddy]: https://www.bahn-buddy.de
 [cf]: http://confschedule.net
 [tabdo]: http://www.tabdo.net
 [spock]: http://www.spock.li
