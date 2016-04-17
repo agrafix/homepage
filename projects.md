@@ -34,7 +34,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [TribalWars Lan][twlan]
 
 [tc]: https://www.tramcloud.net
-[bbuddy]: https://www.bahn-buddy.de
+[bbuddy]: https://partner.bahn-buddy.de/link/7f11cebf-2b4f-47b3-a9b1-c14ffe632ddb
 [cf]: http://confschedule.net
 [tabdo]: http://www.tabdo.net
 [spock]: http://www.spock.li
