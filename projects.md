@@ -11,9 +11,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 ### As Founder
 * [TramCloud][tc]
 * [Bahn-Buddy][bbuddy]
-* [ConfSchedule][cf]
 * [TabDo][tabdo]
-* [Manager's Life][managerslife]
 
 ### As Employee
 * [Checkpad] [cpmed]
@@ -23,6 +21,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [Spock][spock]
 * [dockercook][dockercook]
 * [WebSocketServer][websocketserver]
+* [Manager's Life][managerslife]
 * various [Haskell libraries][hackage]
 * ...and many [more][github]
 
@@ -35,11 +34,10 @@ This is a non exhaustive list of projects I am working on or have worked on.
 
 [tc]: https://www.tramcloud.net
 [bbuddy]: https://partner.bahn-buddy.de/link/7f11cebf-2b4f-47b3-a9b1-c14ffe632ddb
-[cf]: http://confschedule.net
 [tabdo]: http://www.tabdo.net
 [spock]: http://www.spock.li
 [dockercook]: https://github.com/factisresearch/dockercook
-[managerslife]: http://managerslife.de
+[managerslife]: https://github.com/agrafix/managerslife
 [websocketserver]: http://websocketserver.de
 [reti]: http://reti.agrafix.net
 [github]: https://github.com/agrafix?tab=repositories
