@@ -4,9 +4,9 @@ title:  "Parser Combinators"
 date:   2016-05-27 23:30:00
 ---
 
-Today we will explore how to build a small parser combinator library in Haskell from scratch. This blog post is the result of an experiment to see how far I could actually implement this by only looking at the [base][hackage-base] and [text][hackage-text] documentation, explicitly without looking at other parser implementations or examples.
+Today we will explore how to build a small parser combinator library in Haskell from scratch. This blog post is the result of an experiment to see if I could actually implement this by only looking at the [base][hackage-base] and [text][hackage-text] documentation, explicitly without looking at other parser implementations or examples.
 
-I think most other Haskell parser examples will work on `String`s, but since `String`s come with a lot of downsides I will try to run our parser on `Text` from the [text][hackage-text] package and see where that gets me. Thus, or parser will take a `Text` and return the leftover unparsed `Text`, and a parsed result `a` or a parse error:
+I think most other Haskell parser examples will work on `String`s, but since `String` come with a lot of downsides I will try to run our parser on `Text` from the [text][hackage-text] package and see where that gets me. Thus, our parser will take a `Text` and return the leftover unparsed `Text` with a parsed result `a` or a parse error:
 
 {% highlight haskell %}
 type ParseError = T.Text
@@ -26,7 +26,7 @@ instance Functor Parser where
         in (rest, fmap f result)
 {% endhighlight %}
 
-Next up is the `Applicative` instance which requires the definitions of `pure :: a -> f a` to lift a value `a` into the `f` "universe", and `(<*>) :: f (a -> b) -> f a -> f b` to sequentially apply two computations and combine the result.
+Next up is the `Applicative` instance which requires the definitions of `pure :: a -> f a` to lift a value `a` into the `f` "universe" (in our case `Parser`), and `(<*>) :: f (a -> b) -> f a -> f b` to sequentially apply two parsers and combine the result.
 
 {% highlight haskell %}
 instance Applicative Parser where
@@ -39,7 +39,7 @@ instance Applicative Parser where
             Right f -> runParser (fmap f continue) rest
 {% endhighlight %}
 
-The `<*>` implementation is a little bit more interesting, so here is what is does in words: first, we run the left hand parser to receive the function (`a -> b`) which we must apply to the value of the second parser. Then, we either propagate failure, or we use our previously defined `Functor` instance to convert the second parser `Parser a` to a `Parser b` and then run that on the left over of the left hand parser.
+The `<*>` implementation is a little bit more interesting, so here is what it does in words: first, we run the left hand parser to receive the function (`a -> b`) which we must then apply to the value of the second parser. Next, we either propagate failure, or we use our previously defined `Functor` instance to convert the second parser `Parser a` to a `Parser b` and run that on the left over of the left hand parser.
 
 After defining `Applicative` we will also implement it's close friend and very handy `Alternative`:
 
@@ -69,7 +69,7 @@ instance Monad Parser where
              Right val -> runParser (next val) leftOver
 {% endhighlight %}
 
-With all those abstract concepts implemented, we are ready to write concrete parsers. Let's start out by writing a parser that reads input until the predicate on each subsequent character fails:
+With all those abstract concepts implemented we are ready to write concrete parsers. Let's start out by writing a parser that reads input until the predicate on each subsequent character fails:
 
 {% highlight haskell %}
 satisfy :: (Char -> Bool) -> Parser T.Text
@@ -118,7 +118,7 @@ string t =
        else (txt, Left $ T.pack $ "Expected " ++ show t)
 {% endhighlight %}
 
-To implement parsers for `Int` and `Double` we will cheat a little and use the `read :: Read a => String -> a` function from base. Usually I'd go for the `readMay :: Read a => String -> Maybe a` from the [safe][hackage-safe] package, but thanks to our already defined parser combinators we can be quite sure that our `read` will not crash at runtime:
+To implement parsers for `Int` and `Double` we will cheat a little and use the `read :: Read a => String -> a` function from base. Usually I'd go for `readMay :: Read a => String -> Maybe a` from the [safe][hackage-safe] package, but thanks to our already defined parser combinators we can be quite sure that our `read` will not crash at runtime:
 
 {% highlight haskell %}
 numStarter :: Parser T.Text
@@ -141,7 +141,7 @@ double =
        pure $ (read . T.unpack) (firstPart <> fromMaybe "" secondPart)
 {% endhighlight %}
 
-Now is probably a good time to define some unit tests for our parsers. We use excellent [HTF][hackage-htf] package for this:
+Now is probably a good time to define some unit tests for our parsers. We use the excellent [HTF][hackage-htf] package for this:
 
 {% highlight haskell %}
 test_char :: IO ()
@@ -174,7 +174,7 @@ test_double =
        assertEqual ("", Left "skipWhile1 didn't ready anything!") (runParser double "")
 {% endhighlight %}
 
-Great, our basic building blocks seem to be working! As you can see the error messages our parsers produce are not quite useful (yet?), but this might be material a possible blog post in the near future.
+Great, our basic building blocks seem to be working! As you can see the error messages our parsers produce are not quite useful (yet?), but this might be material for a possible blog post in the near future.
 
 Now let's write a parser for this simple data file:
 
@@ -184,7 +184,7 @@ language: purescript; type: functional;
 language: java; type: oop;
 {% endhighlight %}
 
-into these Haskell types:
+We would like to parse it into the following Haskell data structures:
 
 {% highlight haskell %}
 data LanguageType
@@ -201,7 +201,7 @@ data Language
 type LangList = [Language]
 {% endhighlight %}
 
-Let's start off by writing parsers for the building blocks, with tests:
+We start off by writing parsers for the building blocks, with tests:
 
 {% highlight haskell %}
 langType :: Parser LanguageType
@@ -255,7 +255,7 @@ test_lang =
            (runParser lang "language1:!java; type:oop; ")
 {% endhighlight %}
 
-To write a parser for the while file, we need to introduce two new parser combinators. `sepBy` will be used to parse values separated by a separator:
+To write a parser for the whole file, we need to introduce two new parser combinators. `sepBy` will be used to parse values separated by a separator:
 
 {% highlight haskell %}
 sepBy :: Parser val -> Parser sep -> Parser [val]
@@ -303,7 +303,7 @@ test_langFile =
           ]
 {% endhighlight %}
 
-Success! Now this is just the beginning of a parser combinator library, there are still many areas to be explored such as nicer error messages, backtracking and performance concerns. You should probably use one of the awesome parser combinator libraries out there that address these issues:
+Success! Now this is just the beginning of a parser combinator library, there are still many areas to be explored such as nicer error messages, backtracking, performance concerns and of course more combinators! You should probably use one of the awesome parser combinator libraries out there that address these issues:
 
 * [attoparsec][hackage-attoparsec]: Addresses backtracking and performance concerns
 * [parsec][hackage-parsec]: Addresses error messages and backtracking (`try` operator)
