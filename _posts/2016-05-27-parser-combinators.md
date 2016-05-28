@@ -279,7 +279,7 @@ endOfInput =
     else (txt, Left "Expecting endOfInput")
 {% endhighlight %}
 
-Putting it all together, or file parser (with test of course!) will look like this:
+Putting it all together, our file parser (with test of course!) will look like this:
 
 {% highlight haskell %}
 langFile :: Parser LangList
