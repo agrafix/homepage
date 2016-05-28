@@ -178,7 +178,7 @@ Great, our basic building blocks seem to be working! As you can see the error me
 
 Now let's write a parser for this simple data file:
 
-{% endhighlight %}
+{% highlight text %}
 language: haskell; type: functional;
 language: purescript; type: functional;
 language: java; type: oop;
