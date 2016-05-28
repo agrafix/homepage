@@ -312,6 +312,8 @@ Success! Now this is just the beginning of a parser combinator library, there ar
 
 That's all for now - a working project can be found on [GitHub: agrafix/parser-playground][gh-project]. To build and run the tests, clone the project an run `stack test`.
 
+Feel free to join the discussion on [reddit][discuss]
+
 [hackage-text]: http://hackage.haskell.org/package/text-1.2.2.1
 [hackage-base]: http://hackage.haskell.org/package/base-4.8.2.0
 [hackage-safe]: http://hackage.haskell.org/package/safe-0.3.9
@@ -320,3 +322,4 @@ That's all for now - a working project can be found on [GitHub: agrafix/parser-p
 [hackage-parsec]: http://hackage.haskell.org/package/parsec
 [hackage-megaparsec]: http://hackage.haskell.org/package/megaparsec
 [gh-project]: https://github.com/agrafix/parser-playground/tree/17d5715bf3fce85b09bde78b5bc04c89e29b8e51
+[discuss]: https://www.reddit.com/r/haskell/comments/4ldnqy/parser_combinators/
