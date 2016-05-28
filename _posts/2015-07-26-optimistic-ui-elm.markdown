@@ -10,9 +10,9 @@ I'm still on the hunt for "the right" programming language for web front-ends. J
 
 *If you're not new to Elm, jump to section 'Real world Elm'*
 
-A [typical Elm program][elm-arch] is divided into three parts: view, model and update. 
+A [typical Elm program][elm-arch] is divided into three parts: view, model and update.
 
-### The model 
+### The model
 
 The model defines your local state
 {% highlight haskell %}
@@ -22,7 +22,7 @@ type Operation
 
 type alias Model =
     { displayed : Int
-    , lastResult : Int 
+    , lastResult : Int
     , op : Operation
     }
 {% endhighlight %}
@@ -42,7 +42,7 @@ type Action
 update : Action -> Model -> Model
 update action model =
     case action of
-        PressNumber i -> 
+        PressNumber i ->
             let (Ok newNumber) = String.toInt (toString model.displayed ++ toString i)
             in { model | displayed <- newNumber }
         Add ->
@@ -56,7 +56,7 @@ The view is just a pure function converting your model into something "renderabl
 {% highlight haskell %}
 header : Html
 header =
-    div' { class = "header clearfix "} 
+    div' { class = "header clearfix "}
     [ nav_  []
     , h3' { class = "text-muted" } [ text "Elm Calculator" ]
     ]
@@ -67,7 +67,7 @@ view address model =
             colXs_ 3 [ btnDefault_ { btnParam | label <- Just (toString i) } address (PressNumber i) ]
         opBtn desc op =
             colXs_ 3 [ btnPrimary_ { btnParam | label <- Just desc } address op ]
-    in container_ 
+    in container_
         [ header
         , div' { class = "result" } [ text (toString model.displayed) ]
         , div' { class = "num-pad "}
@@ -79,7 +79,7 @@ view address model =
         ]
 {% endhighlight %}
 
-It's really just that simple. And it comes with some cool advantages: Your `update` function is pure! This means you can test is very easily. There's a simple package to wire all this together called [start-app][elm-startapp]. 
+It's really just that simple. And it comes with some cool advantages: Your `update` function is pure! This means you can test is very easily. There's a simple package to wire all this together called [start-app][elm-startapp].
 
 ### Wiring it all up
 {% highlight haskell %}
@@ -118,7 +118,7 @@ type alias ReferenceProfile =
 
 referenceProfileDec : Json.Decoder ReferenceProfile
 referenceProfileDec =
-    Json.object5 ReferenceProfile 
+    Json.object5 ReferenceProfile
         ("id" := Json.int)
         ("name" := Json.string)
         ("notes" := Json.string)
@@ -143,12 +143,12 @@ The `Json.Decoder` needs to match our Haskell [aeson][hs-aeson] instance for the
 
 Now we need to write the actual logic working with these `ReferenceProfile`s. We would like to define a table to display them and allow actions like modifying and deleting. This means jumping through the same steps as before: model, view and update:
 
-### The model 
+### The model
 
 The model is just the list of `ReferenceProfile`s:
 {% highlight haskell %}
-type alias Model = 
-    { list : List Api.ReferenceProfile 
+type alias Model =
+    { list : List Api.ReferenceProfile
     }
 
 initModel =
@@ -160,18 +160,18 @@ initModel =
 
 The update part is a little bit more complex, as we want [optimistic UI][meteor-latency]. Let's define our actions first:
 {% highlight haskell %}
-type ServerMessage 
+type ServerMessage
     = ProfileList (List (Api.ReferenceProfile))
-type ServerQuery 
+type ServerQuery
     = SqRefreshProfiles
     | SqDeleteProfile Api.ReferenceProfileId
     | SqNoop
-type Action 
+type Action
     = ServerAction ServerMessage
     | ClientAction ServerQuery
 {% endhighlight %}
 
-The `ServerQuery` are the possible queries that can be sent to the server. The `ServerMessage` are the possible responses. The `Action`s on the model are a combination of the queries and the responses. This is important, as that's used to implement optimistic UI. 
+The `ServerQuery` are the possible queries that can be sent to the server. The `ServerMessage` are the possible responses. The `Action`s on the model are a combination of the queries and the responses. This is important, as that's used to implement optimistic UI.
 
 Now wee need several [Mailbox][elm-mailbox]es to manage queries and responses:
 {% highlight haskell %}
@@ -189,7 +189,7 @@ These will be wired together using a [port][elm-port]:
 runQuery : ServerQuery -> Task Http.Error (Maybe ServerMessage)
 runQuery q =
     case q of
-        SqRefreshProfiles -> 
+        SqRefreshProfiles ->
             Task.map (Just << ProfileList) Api.listReferenceProfiles
         SqDeleteProfile pid ->
             Task.map (Just << ProfileList) (Api.deleteReferenceProfile pid `Task.andThen` \_ -> Api.listReferenceProfiles)
@@ -223,8 +223,8 @@ Nothing surprising here, just applying the actions to our model.
 Just rendering the `Model` to `Html` and wiring our `Address` to our button(s).
 {% highlight haskell %}
 view : Signal.Address ServerQuery -> Model -> Html
-view addr m = 
-    div_ 
+view addr m =
+    div_
     [ div' { class = "page-header" } [ h1_ "Reference profiles: Catalog" ]
     , tableStriped_
         [ thead_
@@ -238,12 +238,12 @@ view addr m =
         , tbody_ (List.map (referenceProfileRow addr) m.list)
         ]
     ]
-   
+
 referenceProfileRow : Signal.Address ServerQuery -> Api.ReferenceProfile -> Html
 referenceProfileRow addr rp =
     let buttons =
-            [ btnSmDefault_ 
-                    { btnParam 
+            [ btnSmDefault_
+                    { btnParam
                         | label <- Just "delete"
                         , icon <- Just glyphiconTrash_
                     } addr (SqDeleteProfile rp.id)
@@ -255,12 +255,12 @@ referenceProfileRow addr rp =
         , td_ [ text (toString rp.measurePointOffset ++ " mm") ]
         , td_ [ text rp.notes ]
         , td_ buttons
-        ] 
+        ]
 {% endhighlight %}
 
 ### Wire it up
 
-Now we need to connect everything: 
+Now we need to connect everything:
 
 * Signals coming from the UI and the Server should go into our `update` function and fold over our `Model`
 * Signals coming from the UI should trigger custom logic that may send HTTP requests (`serverQuery` mailbox)
