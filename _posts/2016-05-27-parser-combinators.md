@@ -85,7 +85,7 @@ This is very simple because the `text` library already provides a function `span
 satisfy1 :: (Char -> Bool) -> Parser T.Text
 satisfy1 f =
     satisfy f >>= \res ->
-    do when (T.null res) $ fail "skipWhile1 didn't ready anything!"
+    do when (T.null res) $ fail "satisfy1 didn't read anything!"
        pure res
 {% endhighlight %}
 
