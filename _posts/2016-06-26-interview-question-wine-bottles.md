@@ -61,4 +61,7 @@ sat
 )
 ```
 
+Looking forward to your Feedback on [HackerNews][hn].
+
 [z3]: https://github.com/Z3Prover/z3
+[hn]: https://news.ycombinator.com/item?id=11980652
