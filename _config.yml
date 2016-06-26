@@ -1,7 +1,7 @@
 # Site settings
 title: Alexander Thiemann
 email: mail@athiemann.net
-description: > 
+description: >
   (functional) programmig and more
 baseurl: ""
 url: "http://athiemann.net"
