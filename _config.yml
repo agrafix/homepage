@@ -8,7 +8,7 @@ url: "http://athiemann.net"
 twitter_username: agrafix
 github_username:  agrafix
 
-exclude: [vendor, Gemfile, .travis.yml, deploy_rsa.enc]
+exclude: [vendor, Gemfile, .travis.yml, deploy_rsa.enc, deploy_rsa]
 
 # Build settings
 markdown: kramdown
