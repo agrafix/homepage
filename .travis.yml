@@ -23,6 +23,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/<dir> deploy@163.172.179.32:site
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/_site deploy@163.172.179.32:site
   on:
     branch: master
