@@ -8,9 +8,12 @@ permalink: /about/
 
 <br style="clear: both;" />
 
+The Fingerprint of my GPG Signature is `26FF CFD2 4DE9 A2D2 166B  3356 B303 A2EC F7B2 1D1C`. The public key can be found [here][pubkey]
+
 [tc]: https://www.tramcloud.net
 [bb]: https://www.bahn-buddy.de
 [cp]: http://www.checkpad.de
 [uni]: https://www.uni-freiburg.de/
 [docker-fr]: http://www.meetup.com/de/Docker-Freiburg/
 [spock]: https://www.spock.li
+[pubkey]: /pubkey-at.asc
