@@ -1,0 +1,28 @@
+language: ruby
+sudo: false
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+rvm:
+  - 2.1
+before_script:
+  - chmod +x ./_scripts/cibuild
+script: ./_scripts/cibuild
+addons:
+  ssh_known_hosts: 163.172.179.32
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_2591308a9857_key -iv $encrypted_2591308a9857_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
+
+before_deploy:
+  - eval "$(ssh-agent -s)"
+  - chmod 600 $TRAVIS_BUILD_DIR/deploy_rsa
+  - ssh-add $TRAVIS_BUILD_DIR/deploy_rsa
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/<dir> deploy@163.172.179.32:site
+  on:
+    branch: master
