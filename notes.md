@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Notes
+title: Mostly technical notes
 permalink: /notes/
 ---
-
-This page is a collection of (technical?) notes.
 
 # Git
 
