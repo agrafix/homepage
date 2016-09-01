@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "DYI: Haskell docs"
+title:  "DIY: Haskell docs"
 date:   2016-09-01 15:00:00
 ---
 
