@@ -18,6 +18,9 @@ git checkout -b new-branch
 
 # remove local branch
 git branch -d new-branch
+
+# add single hunk from a file
+git add --patch
 ```
 
 ## (Spac)emacs
