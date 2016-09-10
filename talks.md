@@ -4,11 +4,9 @@ title: Talks
 permalink: /talks/
 ---
 
-## Upcoming
-* *Sept 2016*: Haskell Web Programming Workshop at [MuniHac2016][munihac2016]
-
 ## 2016
-* *Jul*: Spock - Powerful Elegant Web Applications at [ZuriHac2016][zurihac2016] ([Video (English)][zurihac2016-video])
+* *Sept 2016*: Haskell Web Programming Workshop at [MuniHac2016][munihac2016] (Material available [here][munihac2016-material])
+* *Jul*: Spock - Powerful Elegant Web Applications at [ZuriHac2016][zurihac2016] ([Video (English)][zurihac2016-video], [Discussion][zurihac2016-video-reddit])
 
 ## 2015
 * *Jan:* Modern type-safe web development with Spock at [BobKonf Berlin 2015][bob-2015] ([Slides (German)][bob-2015-slides])
@@ -30,4 +28,6 @@ permalink: /talks/
 [fby-2015]: http://fby.by/en/
 [zurihac2016]: https://wiki.haskell.org/ZuriHac2016#Alexander_Thiemann
 [zurihac2016-video]: https://www.youtube.com/watch?v=-b-Oz6y-n_Y
+[zurihac2016-video-reddit]: https://www.reddit.com/r/haskell/comments/51ka1m/zurihac_2016_powerful_elegant_web_applications/
 [munihac2016]: https://wiki.haskell.org/MuniHac2016
+[munihac2016-material]: https://github.com/agrafix/Spock-starter
