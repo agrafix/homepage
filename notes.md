@@ -21,6 +21,9 @@ git branch -d new-branch
 
 # add single hunk from a file
 git add --patch
+
+# push the current branch
+git push origin HEAD
 ```
 
 ## (Spac)emacs
