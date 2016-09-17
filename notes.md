@@ -42,8 +42,6 @@ see [issue #4642][ghc-spacemacs-4642]
 2. search and install `request`
 3. restart emacs `M-m f e R` (for 'evil': `SPC f e R`)
 
-[ghc-spacemacs-4642]: https://github.com/syl20bnr/spacemacs/issues/4642
-
 ### Duplicate current line
 
 ```elisp
@@ -65,3 +63,11 @@ see [issue #4642][ghc-spacemacs-4642]
 ```elisp
 (global-set-key (kbd "C-c f") 'kill-whole-line)
 ```
+
+## Webserver configuration
+
+* [Nginx + Let's Encrypt][do-nginx-letsencrypt]
+
+
+[ghc-spacemacs-4642]: https://github.com/syl20bnr/spacemacs/issues/4642
+[do-nginx-letsencrypt]: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
