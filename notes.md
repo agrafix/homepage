@@ -68,6 +68,22 @@ see [issue #4642][ghc-spacemacs-4642]
 
 * [Nginx + Let's Encrypt][do-nginx-letsencrypt]
 
+## Objective C
+
+### Blocks
+
+```objc
+// define:
+typedef retTy (^BlockName)(int foo, NSString *bar);
+
+// use:
+BlockName block = ^retTy(int foo, NSString *bar) {
+    // do stuff
+};
+
+// as property:
+@property (nonatomic, copy) BlockName myBlock;
+```
 
 [ghc-spacemacs-4642]: https://github.com/syl20bnr/spacemacs/issues/4642
 [do-nginx-letsencrypt]: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
