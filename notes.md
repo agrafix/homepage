@@ -24,6 +24,9 @@ git add --patch
 
 # push the current branch
 git push origin HEAD
+
+# create alias "git new" to init with empty commit
+git config --global alias.new '!git init && git commit --allow-empty -m "initial commit"'
 ```
 
 ## (Spac)emacs
