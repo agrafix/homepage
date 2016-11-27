@@ -88,5 +88,10 @@ BlockName block = ^retTy(int foo, NSString *bar) {
 @property (nonatomic, copy) BlockName myBlock;
 ```
 
+## AWS
+
+* [EC2 Linux Troubleshooting][aws-ssh-trouble]
+
+[aws-ssh-trouble]: https://aws.amazon.com/de/premiumsupport/knowledge-center/ec2-linux-ssh-troubleshooting/
 [ghc-spacemacs-4642]: https://github.com/syl20bnr/spacemacs/issues/4642
 [do-nginx-letsencrypt]: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
