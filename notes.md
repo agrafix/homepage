@@ -88,10 +88,19 @@ BlockName block = ^retTy(int foo, NSString *bar) {
 @property (nonatomic, copy) BlockName myBlock;
 ```
 
+## JavaScript
+
+### Benchmarks
+
+* [benchmark.js][gh-benchmarkjs] does [not work with browserify][gh-benchmarkjs-128] at the moment, [Chuhai][gh-chuhai] is a wrapper and contains a workaround.
+
 ## AWS
 
 * [EC2 Linux Troubleshooting][aws-ssh-trouble]
 
+[gh-benchmarkjs-128]: https://github.com/bestiejs/benchmark.js/issues/128
+[gh-chuhai]: https://github.com/Hypercubed/chuhai
+[gh-benchmarkjs]: https://github.com/bestiejs/benchmark.js
 [aws-ssh-trouble]: https://aws.amazon.com/de/premiumsupport/knowledge-center/ec2-linux-ssh-troubleshooting/
 [ghc-spacemacs-4642]: https://github.com/syl20bnr/spacemacs/issues/4642
 [do-nginx-letsencrypt]: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
