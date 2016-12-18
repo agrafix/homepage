@@ -71,6 +71,12 @@ see [issue #4642][ghc-spacemacs-4642]
 
 * [Nginx + Let's Encrypt][do-nginx-letsencrypt]
 
+### Enable autorun on boot (Ubuntu)
+
+```bash
+sudo update-rc.d supervisor defaults
+```
+
 ## Objective C
 
 ### Blocks
