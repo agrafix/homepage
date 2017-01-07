@@ -4,8 +4,12 @@ title: Talks
 permalink: /talks/
 ---
 
+## 2017
+* *Feb 2016*: The Future of Front-end Development: A comparison at [BOB2017][bob-2017] (upcoming)
+
+
 ## 2016
-* *Sept 2016*: Haskell Web Programming Workshop at [MuniHac2016][munihac2016] (Material available [here][munihac2016-material])
+* *Sept*: Haskell Web Programming Workshop at [MuniHac2016][munihac2016] (Material available [here][munihac2016-material])
 * *Jul*: Spock - Powerful Elegant Web Applications at [ZuriHac2016][zurihac2016] ([Video (English)][zurihac2016-video], [Discussion][zurihac2016-video-reddit])
 
 ## 2015
@@ -18,6 +22,7 @@ permalink: /talks/
 * *Jul:* Introduction to dockercook at [First Docker Meetup Frankfurt][docker-2014-07]
 * *Sept:* Introduction to docker at [First Docker Meetup Freiburg][docker-2014-09]
 
+[bob-2017]: http://bobkonf.de/2017/athiemann.html
 [docker-2014-07]: http://www.meetup.com/de/Docker-Frankfurt/events/182122512/
 [docker-2014-09]: http://www.meetup.com/de/Docker-Freiburg/events/198908842/
 [docker-2015-06]: http://www.meetup.com/de/Docker-Freiburg/events/222697854/
