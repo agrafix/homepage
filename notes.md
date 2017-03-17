@@ -27,6 +27,9 @@ git push origin HEAD
 
 # create alias "git new" to init with empty commit
 git config --global alias.new '!git init && git commit --allow-empty -m "initial commit"'
+
+# update all submodules
+git submodule foreach git pull origin master
 ```
 
 ## (Spac)emacs
