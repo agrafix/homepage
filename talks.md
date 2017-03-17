@@ -5,8 +5,7 @@ permalink: /talks/
 ---
 
 ## 2017
-* *Feb 2016*: The Future of Front-end Development: A comparison at [BOB2017][bob-2017] (upcoming)
-
+* *Feb 2017*: The Future of Front-end Development: A comparison at [BOB2017][bob-2017] ([Video (English)][bob2017-video])
 
 ## 2016
 * *Sept*: Haskell Web Programming Workshop at [MuniHac2016][munihac2016] (Material available [here][munihac2016-material])
@@ -36,3 +35,4 @@ permalink: /talks/
 [zurihac2016-video-reddit]: https://www.reddit.com/r/haskell/comments/51ka1m/zurihac_2016_powerful_elegant_web_applications/
 [munihac2016]: https://wiki.haskell.org/MuniHac2016
 [munihac2016-material]: https://github.com/agrafix/Spock-starter
+[bob2017-video]: https://www.youtube.com/watch?v=BZfvoW8wixU
