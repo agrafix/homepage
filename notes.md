@@ -103,6 +103,17 @@ BlockName block = ^retTy(int foo, NSString *bar) {
 
 * [benchmark.js][gh-benchmarkjs] does [not work with browserify][gh-benchmarkjs-128] at the moment, [Chuhai][gh-chuhai] is a wrapper and contains a workaround.
 
+## Docker
+
+### Configure daemon to listen on TCP
+```bash
+sudo emacs /lib/systemd/system/docker.service # remove -H option
+sudo emacs /etc/docker/daemon.json # update to the following:
+# { "hosts": [ "tcp://127.0.0.1:2375", "fd://" ] }
+sudo systemctl daemon-reload
+sudo systemctl restart docker.service
+```
+
 ## AWS
 
 * [EC2 Linux Troubleshooting][aws-ssh-trouble]
