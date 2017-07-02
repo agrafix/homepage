@@ -99,7 +99,7 @@ One way to solve these problems can be via anonymous records. Let's take a look.
 
 ## Anonymous records
 
-An anonymous record is similar to a `data` type, but instead of defining it up front with a `data` declaration we can declare/use it on the fly. Here's an example from the proposed Haskell `superrecord` package which implements the idea of anonymous records:
+An anonymous record is similar to a `data` type, but instead of defining it up front with a `data` declaration we can declare/use it on the fly. Here's an example from the proposed Haskell [superrecord[superrecord] package which implements the idea of anonymous records:
 
 ```haskell
 person =
@@ -210,7 +210,7 @@ data ElField (field :: (Symbol, *)) where
   Field :: KnownSymbol s => !t -> ElField '(s,t)
 ```
 
-we can now add a label to each value and thus get the desired anonymous records described earlier. The library provides many useful combinators to work with them, but comes with a major drawback: The core type is a linked list! Thus already each access will be `O(n)` (compared to `O(1)` for native `data` types) - practically meaning that if you read fields "in the back of" the record it will take more time as the record grows. The library also does not have out-of-the-box support for `OverloadedLabels` to allow syntax like `get #somefield`, but this could trivially be added.
+we can now add a label to each value and thus get the desired anonymous records described earlier. The library provides many useful combinators to work with them, but comes with a major drawback: The core type is a linked list! Thus already each access will be `O(n)` (compared to `O(1)` for native `data` types) - practically meaning that if you read fields "in the back of" the record it will take more time as the record grows. The library also does not have out-of-the-box support for [OverloadedLabels][overloaded-labels] to allow syntax like `get #somefield`, but this could trivially be added.
 
 #### `bookkeeper`
 
@@ -281,7 +281,7 @@ With this definition at hand, we can now start building our record library. We a
 data label := value = KnownSymbol label => FldProxy label := !value
 ```
 
-with which we can now define functions for building a `Rec`. To create an empy record we write
+with which we can now define functions for building a `Rec`. `FldProxy` is `data FldProxy (t :: Symbol) = FldProxy` to allow writing a non-orphan instance `IsLabel l (FldProxy l)` to allow `OverloadedLabels` and the `get #field` notation. To create an empy record we write
 
 ```haskell
 -- | An empty record
@@ -386,13 +386,127 @@ type family RecTyIdxH (i :: Nat) (l :: Symbol) (lts :: [*]) :: Nat where
         )
 ```
 
-Using `natVal'` we bring the index position to value level and read our `SmallArray#` at that position, using `unsafeCoerce` to cast it back to it's original value. Setting a field is implemented using the same information used for `get` and `rcons`. 
+Using `natVal'` we bring the index position to value level and read our `SmallArray#` at that position, using `unsafeCoerce` to cast it back to it's original value. Setting a field is implemented using the same information used for `get` and `rcons`. All other operations are either implemented in terms of `get` and `set`, or leverage the presented ideas to compute physical locations from the type structure.
+
+We can also convert our records to and from native Haskell `data` types leveraging `GHC.Generics` in
+a very straight forward way:
+
+```haskell
+-- | Conversion helper to bring a record back into a Haskell type. Note that the
+-- native Haskell type must be an instance of 'Generic'
+class ToNative a lts | a -> lts where
+    toNative' :: Rec lts -> a x
+
+instance ToNative cs lts => ToNative (D1 m cs) lts where
+    toNative' xs = M1 $ toNative' xs
+
+instance ToNative cs lts => ToNative (C1 m cs) lts where
+    toNative' xs = M1 $ toNative' xs
+
+instance
+    (Has name lts t)
+    => ToNative (S1 ('MetaSel ('Just name) p s l) (Rec0 t)) lts
+    where
+    toNative' r =
+        M1 $ K1 (get (FldProxy :: FldProxy name) r)
+
+instance
+    ( ToNative l lts
+    , ToNative r lts
+    )
+    => ToNative (l :*: r) lts where
+    toNative' r = toNative' r :*: toNative' r
+
+-- | Convert a record to a native Haskell type
+toNative :: (Generic a, ToNative (Rep a) lts) => Rec lts -> a
+toNative = to . toNative'
+```
+
+To implement type classes like `ToJSON`, we implement a reflection mechanism
+
+```haskell
+-- | Apply a function to each key element pair for a record
+reflectRec ::
+    forall c r lts. (RecApply lts lts c)
+    => Proxy c
+    -> (forall a. c a => String -> a -> r)
+    -> Rec lts
+    -> [r]
+reflectRec _ f r =
+    recApply (\(Dict :: Dict (c a)) s v -> f s v) r (Proxy :: Proxy lts)
+
+class RecApply (rts :: [*]) (lts :: [*]) c where
+    recApply :: (forall a. Dict (c a) -> String -> a -> r) -> Rec rts -> Proxy lts -> [r]
+
+instance RecApply rts '[] c where
+    recApply _ _ _ = []
+
+instance
+    ( KnownSymbol l
+    , RecApply rts (RemoveAccessTo l lts) c
+    , Has l rts v
+    , c v
+    ) => RecApply rts (l := t ': lts) c where
+    recApply f r (_ :: Proxy (l := t ': lts)) =
+        let lbl :: FldProxy l
+            lbl = FldProxy
+            val = get lbl r
+            res = f Dict (symbolVal lbl) val
+            pNext :: Proxy (RemoveAccessTo l (l := t ': lts))
+            pNext = Proxy
+        in (res : recApply f r pNext)
+
+type family RemoveAccessTo (l :: Symbol) (lts :: [*]) :: [*] where
+    RemoveAccessTo l (l := t ': lts) = RemoveAccessTo l lts
+    RemoveAccessTo q (l := t ': lts) = (l := t ': RemoveAccessTo l lts)
+    RemoveAccessTo q '[] = '[]
+```
+
+which allows to apply a function given some constraints `c` to be applied to each field and value of
+a record. For example converting any `Rec lts` to a `aeson` `Value` would look like this:
+
+```haskell
+recToValue :: forall lts. (RecApply lts lts ToJSON) => Rec lts -> Value
+recToValue r = toJSON $ reflectRec @ToJSON Proxy (\k v -> (T.pack k, toJSON v)) r
+
+instance ( RecApply lts lts ToJSON ) => ToJSON (Rec lts) where
+    toJSON = recToValue
+    -- toEncoding is also provided, but left out here for simplicity.
+```
+
+This confirms that we reached our first goal and can reason about the structure of the `Rec lts` using type classes and type families allowing to write general type class instances and transformations without the need of code generation or other boilerplate.
+
+The library also provides many more type class instances and combinators which can be found on in the [superrecord Haddock documentation][superrecord].
 
 ### Benchmarks
 
+To confirm that our second goal, performance, was met, we conduct some benchmarks. We also looked at generated assembler code to confirm that a simple field get with `superrecord` results in the same code as a native field read. We benchmark against the three other approaches (native, tuples and linked lists) via (`labels`, `bookkeeper` and native `data` types).
+
+(all times in **ns**)
+| library       |             get | nested get |
+| ------------- | --------------: | ---------: |
+| native        |             7.7 |       17.1 |
+| labels        |             8.1 |       20.2 |
+| bookkeeper    |             9.3 |       24.2 |
+| superrecord   |             8.0 |       23.0 |
+
+(all times in **µs**)
+| library       | json read write |
+| ------------- | --------------: |
+| native        |           334.9 |
+| superrecord   |           274.1 |
+
+TODO: elaborate and more benchmarks...
+
 ### Outlook
 
+One idea that surfaced during development was that it may be possible for nested records to inline them into a single `SmallArray#` to speed up nested getting and setting. The problem is that this would remove sharing if one extracted a subrecord and worked with it, but the usual coding path we found in our applications mostly read individual fields (leaves) which would indead benefit from such approach.
+
+Another area of exploration would be database libraries, where SQL is writting in a type driven DSL (for example [opaleye][opaleye]). In the case of joins we the help of anonymous records should greatly simplify library APIs.
+
 ## Conclusion
+
+The end result is pretty satisifing: A practical library for anonymous records that is both fast and has an ergonomic interface for both using and extending it.
 
 [reader-t-pattern]: https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
 [schematic]: https://github.com/dredozubov/schematic
@@ -401,3 +515,6 @@ Using `natVal'` we bring the index position to value level and read our `SmallAr
 [rawr]: http://hackage.haskell.org/package/rawr
 [labels]: http://hackage.haskell.org/package/labels
 [vector]: http://hackage.haskell.org/package/vector
+[superrecord]: http://hackage.haskell.org/package/superrecord
+[opaleye]: http://hackage.haskell.org/package/opaleye
+[overloaded-labels]: https://ghc.haskell.org/trac/ghc/wiki/Records/OverloadedRecordFields/OverloadedLabels
