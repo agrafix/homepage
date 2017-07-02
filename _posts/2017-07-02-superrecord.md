@@ -1,0 +1,273 @@
+---
+layout: post
+title:  "SuperRecord: Anonymous Records for Haskell"
+date:   2017-07-02 18:00:00
+---
+
+Many mainstream Haskell programs that reach a certain size need to solve at least two core problems. First, all your logic will run in some kind of environment that provides logging, configuration, other external data such as templates and/or some global application state. This environment must be managed somehow and correctly be passed to the specific logic. Secondly, you will need to read and write out data into the real world, for example to talk to a JSON REST-API. Let's take a look in detail at these problems and how we can solve them today.
+
+## Motivation
+
+### Environments
+
+A common simplified example for an environment will look similar to this
+
+```haskell
+data Config
+    = Config
+    { c_port :: Int
+    , c_oauthToken :: String
+    , -- ...
+    }
+
+data Logger
+    = Logger
+    { l_logInfo :: String -> IO ()
+    , -- ...
+    }
+
+data Env
+    = Env
+    { e_config :: Config
+    , e_logger :: Logger
+    , e_http :: HTTPClient -- used to make HTTP requests
+    , e_db :: Connection
+    }
+```
+
+The `Env` is created once at the start of the program and then passed to all components of the application. This can easily be achieved by simply passing it to every function as parameter
+
+```haskell
+setupEnv :: IO Env
+setupEnv = undefined -- read config files, ...
+
+main :: IO ()
+main =
+    do env <- setupEnv
+       doWork env
+
+doWork :: Env -> IO ()
+doWork env =
+    do l_logInfo (e_logger env) "Now doing some work..."
+       blogPosts <- runQuery (e_db env) "SELECT * FROM pending_posts"
+       sendToBlogApi (e_http env) (c_oauthToken $ e_config env) blogPosts
+       -- ....
+```
+
+Now for this example, this may look like a reasonable thing to do, but the approach has two drawbacks: As the program grows, we have to pass around this `env :: Env` many times which will result in slightly obfuscated code. More importantly though, if further down the stack in a function we only need smaller portions of `Env`, like for example only `l_logInfo` of `Logger` and `c_port` of `Config`, we will either need to introduce a new data type containing only the needed fields (`LogInfoPort`) and convert the `Env` to that, or we still take `Env` as parameter and have a hard time reasoning about what the function does and reusing/testing it because we need to then fill in all the other unused fields with garbage.
+
+To solve the problem of passing things around to everything, we can use the `ReaderT Env IO a` monad. This will get rid of having to pass around the parameter all the time. To attack the second problem, we can introduce type classes that denote single components of our config
+
+```haskell
+class HasHttpClient env where
+    getHTTPClient :: env -> HTTPClient
+
+class HasConfig env where
+    getConfig :: env -> Config
+
+-- ...
+```
+
+And then describe what our function needs using those constraints:
+
+```
+doDeepWork :: (MonadReader env m, HasHttpClient env) => m ()
+doDeepWork =
+    do cli <- asks getHTTPClient
+       sendToBlogApi cli "mytoken" ["Post #1"]
+```
+
+This idea is explored in depth in a recent [FPComplete post by Michael Snoyman][reader-t-pattern]. This idea is pretty decent, but it also has some drawbacks: How do we express nested constraints? If we for example only need `c_port` of `Config` we could add a new type class
+
+```haskell
+class HasPort env where
+   getPort :: env -> Int
+```
+
+and write two instances, one for `Config` and one for `Env` using that. The result is lot's of type classes and we start to loose track of what happens again. Another drawback is that we now can construct smaller environments for testing (or reusage sites), but we still need to introduce new types and write type class instances for every smaller bit.
+
+We will look into solutions, but let's introduce the other problem before hand.
+
+### Talking to the real world
+
+Whether talking to a REST API or writing a REST service, one always needs to specify the structure of the data that is being accepted or sent. A common path with Haskell here is to use JSON as data format using `aeson` as library and the `ToJSON` and `FromJSON` type classes to specify what the structure of the JSON sent or parsed should be. This requires you to define a Haskell type for each JSON payload you want to send. For example, when implementing a REST service, we would define a `RequestXX` and a `ResponseXX` type for each end point, implement `FromJSON RequestXX` and  `ToJSON ResponseXX`. In our handler we would first read the request into `RequestXX` and then deconstruct and work in the data of the `RequestXX` type, and then pack the results back into a `ResponseXX` type. For good maintainability, code reuse and testability we should not implement business logic functions in terms of any `RequestXX` or `ResponseXX` type, thus we will always write converting between business logic types and these request/response types. Also, if our response/request type only slightly differs between end points, we need to introduce a new type again (and implement serialization/parsing again). Some of these problems can partially be resolved similar to the `ReaderT` case, we could also write these `HasXX` type classes and implement instances for our request/response types, but it does not solve the problem of defining many types and writing many similar json parsers/serializers and comes with the drawbacks mentioned above.
+
+
+### A solution?
+
+One way to solve these problems can be via anonymous records. Let's take a look.
+
+## Anonymous records
+
+An anonymous record is similar to a `data` type, but instead of defining it up front with a `data` declaration we can declare/use it on the fly. Here's an example from the proposed Haskell `superrecord` package which implements the idea of anonymous records:
+
+```haskell
+person =
+    #name := "Alex"
+    & #age := 23
+    & rnil
+```
+
+The type of person is `person :: Rec '["name" := String, "age" := Int]`. This basically means `person` is a record (`Rec`) that has the fields `name` and `age` of types `String` and `Int`. We will explain the concrete meaning and machinery later on. Using Haskell's native `data` types, it would look like this:
+
+```haskell
+data Person = Person { name :: String, age :: Int }
+person = Person { name = "Alex", age = 23 }
+```
+
+On trivial example why the first representation is beneficial is that we can write a function that requires at least a field `name`:
+
+```haskell
+greet :: Has "name" r String => Rec r -> String
+greet r = "Hello " ++ get #name r
+```
+
+where the `Has "name" r String` constraint means: "The record of type `Rec r` must have a field `name` of value `String`".. This function can work on many values like:
+
+```haskell
+person = #name := "Alex" & #age = 23 & rnil
+person2 = #name := "Laura" & rnil
+person3 = #favoriteColor := "green" & #name = "Dorothee" & rnil
+```
+
+where as the function
+
+```haskell
+greet :: Person -> String
+greet p = "Hello " ++ name p
+```
+
+can only work on values of type `Person`. Again, this could be solved using type classes, but you'd still need to write a new `PersonX` type for the three examples above and implement a `HasName` instance for all of them. Circling down on the "environment problem", we can now model our environments as anonymous records and use the `Has` constraint to explain exactly what we need! For example or `doDeepWork` from above
+
+```haskell
+doDeepWork :: (MonadReader (Rec r) m, Has "httpClient" r HTTPClient) => m ()
+doDeepWork =
+    do cli <- asks (get #httpClient)
+       sendToBlogApi cli "mytoken" ["Post #1"]
+```
+
+We can also easily express nested environment constraints
+
+```haskell
+doDeepMoreWork ::
+    ( MonadReader (Rec r) m
+    , Has "config" r (Rec rc)
+    , Has "port" rc Int
+    ) => m ()
+doDeepMoreWork =
+    do port <- asks (get #port . get #config)
+       pingPort port
+```
+
+The big advantage here is that we do not need to introduce any new data types or type classes, we can simply write down what dependencies or functions actually have, and then after combining them or when testing them providing just what they need. For example:
+
+```haskell
+myUnitTests =
+  do test $ runReaderT doDeepMoreWork ("config" := ("port" := 123 & rnil) & rnil)
+     someClient <- newClient
+     test $ runReaderT doDeepWork ("httpClient" := someClient & rnil)
+
+-- or
+
+doMuchWork ::
+    ( MonadReader (Rec r) m
+    , Has "config" r (Rec rc)
+    , Has "port" rc Int
+    , Has "httpClient" r HTTPClient
+    ) => m ()
+doMuchWork =
+  do doDeepMoreWork
+     doDeepWork
+```
+
+Moving to our real world data problem, these record already look a lot like JSON. They seem to fit our request/response problem pretty well. In fact the `superrecord` library has a JSON representation built in, that works as expected:
+
+```haskell
+toJSON (#name := "Alex" & #age = 23 & rnil)
+   == "{\"name\": \"Alex\", \"age\": 23}"
+```
+
+This means that we no longer need to write `RequestXX` and `ResponseXX` types, but instead can directly parse as a `superrecord` record and read/write fields as needed when converting to/from business logic types, while automatically having the json parsing/serialization taken care of. There's even an [interesting library][schematic] in the works by Denis Redozubov that could one day provide automatic migrations on top of that.
+
+### Related work
+
+Before looking at how `superrecord` works, we discuss the existing options. We discovered the following Haskell packages: `labels`, `vinyl`, `rawr` and `bookkeeper`.
+
+#### `vinyl`
+
+The [vinyl][vinyl] package is one of the oldest packages, with the first release in 2012. The core type of `vinyl` is:
+
+```haskell
+data Rec :: (u -> *) -> [u] -> * where
+  RNil :: Rec f '[]
+  (:&) :: !(f r) -> !(Rec f rs) -> Rec f (r ': rs)
+```
+
+This is basically a heterogeneous linked list that allows tracking it's contents at type level. It's very general, using the first type parameter you can control the structure of individual values. If we provide `Identity`, we basically get a heterogeneous list. If we provide
+
+```haskell
+data ElField (field :: (Symbol, *)) where
+  Field :: KnownSymbol s => !t -> ElField '(s,t)
+```
+
+we can now add a label to each value and thus get the desired anonymous records described earlier. The library provides many useful combinators to work with them, but comes with a major drawback: The core type is a linked list! Thus already each access will be `O(n)` (compared to `O(1)` for native `data` types) - practically meaning that if you read fields "in the back of" the record it will take more time as the record grows. The library also does not have out-of-the-box support for `OverloadedLabels` to allow syntax like `get #somefield`, but this could trivially be added.
+
+#### `bookkeeper`
+
+The [bookkeeper][bookkeeper] package is more concrete than `vinyl`, it focuses on anonymous records and encourages the use of `OverloadedLabels`. Take a look at the example from the README:
+
+```haskell
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE OverloadedLabels #-}
+import Bookkeeper
+
+jane :: Book '[ "name" :=> String, "age" :=> Int ]
+jane = emptyBook
+     & #name =: "Jane"
+     & #age =: 30
+
+-- >>> jane
+-- Book {age = 30, name = "Jane"}
+-- >>> jane ?: #name
+-- "Jane"
+```
+
+It also provides a type class to convert to native Haskell types with the same structure (via `Generic`), but unfortunately the core data type is defined as
+
+```haskell
+newtype Book' (a :: [Mapping Symbol Type]) = Book { getBook :: Map a }
+
+-- with
+data Map (n :: [Mapping Symbol *]) where
+    Empty :: Map '[]
+    Ext :: Var k -> v -> Map m -> Map ((k :-> v) ': m)
+```
+
+which is essentially also a linked list with a degrade in performance compared to native Haskell `data` types.
+
+#### `rawr` and `labels`
+
+Bot [rawr][rawr] and [labels][labels] packages are build around Haskell tuples. Thus, they do not have a core data type, but instead build up records using type classes defined on tuples and a `Field` data type. Taken from the `labels` package:
+
+```haskell
+-- | Field named @l@ labels value of type @t@.
+-- Example: @(#name := \"Chris\") :: (\"name\" := String)@
+data label := value = KnownSymbol label => Proxy label := value
+
+-- with instances
+instance Has l a (u1, (:=) l a)
+instance Has l a ((:=) l a, u2)
+-- ...
+```
+
+Records look like this: `(#foo := "hi", #bar := 123)`. This is an interesting idea, especially as GHC can optimize these tuples like native `data` types thus giving similar performance as the type classes explicitly encode a read to a field by getting the n-th element from the tuple. The major drawback here is that it is very tedious to define new type class instances for these records as one must use code generation (e.g. TemplateHaskell) to generate instances for all the tuple combinations up to a certain size.
+
+## SuperRecord
+
+[reader-t-pattern]: https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
+[schematic]: https://github.com/dredozubov/schematic
+[vinyl]: https://hackage.haskell.org/package/vinyl
+[bookkeeper]: https://hackage.haskell.org/package/bookkeeper
+[rawr]: http://hackage.haskell.org/package/rawr
+[labels]: http://hackage.haskell.org/package/labels
