@@ -265,9 +265,83 @@ Records look like this: `(#foo := "hi", #bar := 123)`. This is an interesting id
 
 ## SuperRecord
 
+The drawbacks of the mentioned libraries resulted in the design and implementation of `superrecord`. The goals are to provide fast anonymous records while still having a manageable way to define type class instances. This resulted in the idea of having a heterogeneous array holding the values and tracking the contents on type level. We define a core data type:
+
+```haskell
+-- | The core record type.
+data Rec (lts :: [*])
+   = Rec { _unRec :: SmallArray# Any } -- Note that the values are physically in reverse order
+```
+
+At type level, we track which field has what position in the physical storage array (in our case, equal to the location in the type level list), and what the type of that field is. We erased the type on the lowest level (all elements are `Any`) and did not use something like `Data.Dynamic` to remove the overhead of useless casting as we - if our type families are correct - certainly know the types of all elements. We did not pick `Vector` from the [vector][vector] library as our holding type, as it internally still does some bounds checking (which we don't need for the same reason). Also `Vector` is represented as `Array#`, but typically records are smaller than 128 fields and we directly freeze all arrays to remain with functional semantics so `SmallArray#` is a better suited representation from a space and performance point of view (e.g. no card table is needed).
+
+With this definition at hand, we can now start building our record library. We also need a type for labeled fields, similar to the `labels` approach
+
+```haskell
+data label := value = KnownSymbol label => FldProxy label := !value
+```
+
+with which we can now define functions for building a `Rec`. To create an empy record we write
+
+```haskell
+-- | An empty record
+rnil :: Rec '[]
+rnil =
+    unsafePerformIO $! IO $ \s# ->
+    case newSmallArray# 0# (error "No Value") s# of
+      (# s'#, arr# #) ->
+          case unsafeFreezeSmallArray# arr# s'# of
+            (# s''#, a# #) -> (# s''# , Rec a# #)
+```
+
+This allocates a new `SmallArray#` with zero elements and directly freezes it. On the type level, we
+track that the record is empty `Rec '[]`. To add field and value to the record, we define
+
+```haskell
+-- | Prepend a record entry to a record 'Rec'
+rcons ::
+    forall l t lts s.
+    (RecSize lts ~ s, KnownNat s, KeyDoesNotExist l lts)
+    => l := t -> Rec lts -> Rec (l := t ': lts)
+rcons (_ := val) (Rec vec#) =
+    unsafePerformIO $! IO $ \s# ->
+    case newSmallArray# newSize# (error "No value") s# of
+      (# s'#, arr# #) ->
+          case copySmallArray# vec# 0# arr# 0# size# s'# of
+            s''# ->
+                case writeSmallArray# arr# size# (unsafeCoerce# val) s''# of
+                  s'''# ->
+                      case unsafeFreezeSmallArray# arr# s'''# of
+                        (# s''''#, a# #) -> (# s''''#, Rec a# #)
+    where
+        !(I# newSize#) = size + 1
+        !(I# size#) = size
+        size = fromIntegral $ natVal' (proxy# :: Proxy# s)
+```
+
+This allocates a new `SmallArray#`, which is one larger that the given array, copies all the
+elements (physically pointers) into the new array and writes the new element into the free slot. Finally, the array is frozen again. At type level, we check that the provided key `l` does not already exist in the existing record `Rec lts`
+
+```haskell
+type family KeyDoesNotExist (l :: Symbol) (lts :: [*]) :: Constraint where
+    KeyDoesNotExist l '[] = 'True ~ 'True
+    KeyDoesNotExist q (l := t ': lts) = KeyDoesNotExist q lts
+```
+
+and we compute the size of the existing record
+
+```haskell
+type family RecSize (lts :: [*]) :: Nat where
+    RecSize '[] = 0
+    RecSize (l := t ': lts) = 1 + RecSize lts
+```
+
+Finally, we add the label and the new fields type to our record type and get `Rec (l := t ': lts)`. Note that the physicall order of the element is the reverse of the order on type level. There's no up or downside here, we could also copy the old array to an offset `1` and write the new element to position `0`. We only need to keep this in mind when combining two records and reading/writing to them.
+
 [reader-t-pattern]: https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
 [schematic]: https://github.com/dredozubov/schematic
 [vinyl]: https://hackage.haskell.org/package/vinyl
 [bookkeeper]: https://hackage.haskell.org/package/bookkeeper
 [rawr]: http://hackage.haskell.org/package/rawr
 [labels]: http://hackage.haskell.org/package/labels
+[vector]: http://hackage.haskell.org/package/vector
