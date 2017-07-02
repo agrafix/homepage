@@ -320,7 +320,7 @@ rcons (_ := val) (Rec vec#) =
 ```
 
 This allocates a new `SmallArray#`, which is one larger that the given array, copies all the
-elements (physically pointers) into the new array and writes the new element into the free slot. Finally, the array is frozen again. At type level, we check that the provided key `l` does not already exist in the existing record `Rec lts`
+elements (physically pointers) into the new array and writes the new element into the free slot. Finally, the array is frozen again. The new element must also be cast to `Any` using `unsafeCoerce`. At type level, we check that the provided key `l` does not already exist in the existing record `Rec lts`
 
 ```haskell
 type family KeyDoesNotExist (l :: Symbol) (lts :: [*]) :: Constraint where
@@ -336,7 +336,63 @@ type family RecSize (lts :: [*]) :: Nat where
     RecSize (l := t ': lts) = 1 + RecSize lts
 ```
 
-Finally, we add the label and the new fields type to our record type and get `Rec (l := t ': lts)`. Note that the physicall order of the element is the reverse of the order on type level. There's no up or downside here, we could also copy the old array to an offset `1` and write the new element to position `0`. We only need to keep this in mind when combining two records and reading/writing to them.
+Finally, we add the label and the new fields type to our record type and get `Rec (l := t ': lts)`. Note that the physical order of the elements is the reverse of the order on type level. There's no up or downside here, we could also copy the old array to an offset `1` and write the new element to position `0`. We only need to keep this in mind when combining two records and reading/writing to them.
+
+Reading a field from the record is now simply
+
+```haskell
+-- | Require a record to contain a label
+type Has l lts v =
+   ( RecTy l lts ~ v
+   , KnownNat (RecSize lts)
+   , KnownNat (RecVecIdxPos l lts)
+   )
+
+-- | Get an existing record field
+get ::
+    forall l v lts.
+    ( Has l lts v )
+    => FldProxy l -> Rec lts -> v
+get _ (Rec vec#) =
+    let !(I# readAt#) =
+            fromIntegral (natVal' (proxy# :: Proxy# (RecVecIdxPos l lts)))
+        anyVal :: Any
+        anyVal =
+           case indexSmallArray# vec# readAt# of
+             (# a# #) -> a#
+    in unsafeCoerce# anyVal
+```
+
+using `RecTy l lts` to compute the type of the field with label `l` in record `Rec lts`
+
+```haskell
+type family RecTy (l :: Symbol) (lts :: [*]) :: k where
+    RecTy l (l := t ': lts) = t
+    RecTy q (l := t ': lts) = RecTy q lts
+```
+
+and `RecVecIdxPos l lts` to compute the physical index position of the label `l` in the record `Rec lts`.
+
+```haskell
+type RecVecIdxPos l lts = RecSize lts - RecTyIdxH 0 l lts - 1
+
+type family RecTyIdxH (i :: Nat) (l :: Symbol) (lts :: [*]) :: Nat where
+    RecTyIdxH idx l (l := t ': lts) = idx
+    RecTyIdxH idx m (l := t ': lts) = RecTyIdxH (1 + idx) m lts
+    RecTyIdxH idx m '[] =
+        TypeError
+        ( 'Text "Could not find label "
+          ':<>: 'Text m
+        )
+```
+
+Using `natVal'` we bring the index position to value level and read our `SmallArray#` at that position, using `unsafeCoerce` to cast it back to it's original value. Setting a field is implemented using the same information used for `get` and `rcons`. 
+
+### Benchmarks
+
+### Outlook
+
+## Conclusion
 
 [reader-t-pattern]: https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
 [schematic]: https://github.com/dredozubov/schematic
