@@ -261,7 +261,7 @@ instance Has l a ((:=) l a, u2)
 -- ...
 ```
 
-Records look like this: `(#foo := "hi", #bar := 123)`. This is an interesting idea, especially as GHC can optimize these tuples like native `data` types thus giving similar performance as the type classes explicitly encode a read to a field by getting the n-th element from the tuple. The major drawback here is that it is very tedious to define new type class instances for these records as one must use code generation (e.g. TemplateHaskell) to generate instances for all the tuple combinations up to a certain size.
+Records look like this: `(#foo := "hi", #bar := 123)`. This is an interesting idea, especially as GHC can optimize these tuples like native `data` types thus giving similar performance as the type classes explicitly encode a read to a field by getting the n-th element from the tuple. The major drawback here is that it is very tedious to define new type class instances for these records as one must use code generation (e.g. TemplateHaskell) to generate instances for all the tuple combinations up to a certain size. For usual type classes `O(n^2)` instances would be needed (where `n` is the number of fields you would like to support), for type classes that append two records one would need `O(n^4)` instances!
 
 ## SuperRecord
 
@@ -325,6 +325,10 @@ elements (physically pointers) into the new array and writes the new element int
 ```haskell
 type family KeyDoesNotExist (l :: Symbol) (lts :: [*]) :: Constraint where
     KeyDoesNotExist l '[] = 'True ~ 'True
+    KeyDoesNotExist l (l := t ': lts) =
+        TypeError
+        ( 'Text "Duplicate key " ':<>: 'Text l
+        )
     KeyDoesNotExist q (l := t ': lts) = KeyDoesNotExist q lts
 ```
 
@@ -476,27 +480,32 @@ instance ( RecApply lts lts ToJSON ) => ToJSON (Rec lts) where
 
 This confirms that we reached our first goal and can reason about the structure of the `Rec lts` using type classes and type families allowing to write general type class instances and transformations without the need of code generation or other boilerplate.
 
-The library also provides many more type class instances and combinators which can be found on in the [superrecord Haddock documentation][superrecord].
+The library also provides many more type class instances and combinators (like appending two records) which can be found on in the [superrecord Haddock documentation][superrecord].
 
 ### Benchmarks
 
 To confirm that our second goal, performance, was met, we conduct some benchmarks. We also looked at generated assembler code to confirm that a simple field get with `superrecord` results in the same code as a native field read. We benchmark against the three other approaches (native, tuples and linked lists) via (`labels`, `bookkeeper` and native `data` types).
 
-(all times in **ns**)
 | library       |             get | nested get |
 | ------------- | --------------: | ---------: |
 | native        |             7.7 |       17.1 |
 | labels        |             8.1 |       20.2 |
 | bookkeeper    |             9.3 |       24.2 |
-| superrecord   |             8.0 |       23.0 |
+| superrecord   |         **8.0** |   **23.0** |
+
+(all times in **ns**)
+
+As we can see, for simple field reading we are in the game. At the point of writing, I am unsure why the nested get is slower. The amount of pointers that need to be followed should roughly be similar, this will have to be researched further.
+
+
+| library           | json/read write |
+| -------------     | --------------: |
+| native (Generics) | 334.9           |
+| superrecord       | **274.1**       |
 
 (all times in **µs**)
-| library       | json read write |
-| ------------- | --------------: |
-| native        |           334.9 |
-| superrecord   |           274.1 |
 
-TODO: elaborate and more benchmarks...
+The `superrecord` JSON roundtrip is faster than on generated from native types using `Generics`. The `superrecord` variant is optimized here, we first allocate on single `SmallArray#` with enough room for all fields, and then fill them one by one without any copying. More benchmarks can be found in the [repository][superrecord-gh]
 
 ### Outlook
 
@@ -516,5 +525,6 @@ The end result is pretty satisifing: A practical library for anonymous records t
 [labels]: http://hackage.haskell.org/package/labels
 [vector]: http://hackage.haskell.org/package/vector
 [superrecord]: http://hackage.haskell.org/package/superrecord
+[superrecord-gh]: https://github.com/agrafix/superrecord
 [opaleye]: http://hackage.haskell.org/package/opaleye
 [overloaded-labels]: https://ghc.haskell.org/trac/ghc/wiki/Records/OverloadedRecordFields/OverloadedLabels
