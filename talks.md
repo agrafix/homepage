@@ -5,6 +5,7 @@ permalink: /talks/
 ---
 
 ## 2017
+* *Jul 2017*: Reflecting on 5 years of Haskell in Production at [PolyConf2017][poly-2017] (Video will follow)
 * *Feb 2017*: The Future of Front-end Development: A comparison at [BOB2017][bob-2017] ([Video (English)][bob2017-video])
 
 ## 2016
@@ -36,3 +37,4 @@ permalink: /talks/
 [munihac2016]: https://wiki.haskell.org/MuniHac2016
 [munihac2016-material]: https://github.com/agrafix/Spock-starter
 [bob2017-video]: https://www.youtube.com/watch?v=BZfvoW8wixU
+[poly-2017]: https://polyconf.com/
