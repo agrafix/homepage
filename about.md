@@ -14,7 +14,7 @@ The Fingerprint of my GPG Signature is `26FF CFD2 4DE9 A2D2 166B  3356 B303 A2EC
 
 Articles about my projects and/or me.
 
-* [mehr/wert, Das Magazin für Wirtschaft und Soziales, 2017. (Fernsendung) Bayern3. 14.04.2016, 19:00][br3tv-2017] (German)
+* [mehr/wert, Das Magazin für Wirtschaft und Soziales, 2017. (Fernsendung) Bayern3. 08.06.2017, 19:00 Uhr][br3tv-2017] (German)
 * [Karsten Böhne: Wenn das Internet den Anwalt ersetzt, auf: Br.de (2017)][br3-2017] (German)
 * [Felicitas Wilke, Benedikt Müller: Per Mausklick zum Recht, auf: Sueddeutsche.de (2017)][bb-sued] (German)
 * [Caspar Tobias Schlenk: Der Legaltech-Hype geht weiter – dieses Startup hilft verspäteten Bahnfahrern, auf: gruenderszene.de (2016)][bb-founder] (German)
