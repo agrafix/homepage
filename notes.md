@@ -114,6 +114,14 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker.service
 ```
 
+## Bash
+
+### Sane shell script
+
+```bash
+#!/bin/bash -eo pipefail
+```
+
 ## AWS
 
 * [EC2 Linux Troubleshooting][aws-ssh-trouble]
