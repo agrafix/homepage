@@ -4,14 +4,15 @@ title: Consulting
 permalink: /consulting/
 ---
 
-We offer consulting via [Dr. Peter & Alexander Thiemann GbR][thitp] focussing on:
+I personally do not offer any consulting a the moment, but I am still
+shareholder of the consultancy [Dr. Peter & Alexander Thiemann GbR][thitp]. They focus on:
 
 * Functional programming
 * Web development
 * Hiring process for software engineering jobs
 * Designing hardware and software as a whole
 
-Please feel free to contact me at [at@thitp.de][mail].
+Please feel free to contact [Dr. P. Thiemann][mail] for more information.
 
 [thitp]: http://thitp.de
-[mail]: mailto:at@thitp.de
+[mail]: mailto:pt@thitp.de
