@@ -4,8 +4,8 @@ title: Consulting
 permalink: /consulting/
 ---
 
-I personally do not offer any consulting a the moment, but I am still
-shareholder of the consultancy [Dr. Peter & Alexander Thiemann GbR][thitp]. They focus on:
+I personally do not offer any consulting at the moment, but I remain shareholder
+of the consultancy [Dr. Peter & Alexander Thiemann GbR][thitp]. They focus on:
 
 * Functional programming
 * Web development
