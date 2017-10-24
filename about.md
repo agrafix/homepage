@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-<img style="float: left; margin-right: 20px;" width="140" height="200" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, currently co-founder of [TramCloud][tc] and [BahnBuddy][bb], software engineer at [Checkpad][cp] and CS master student at the [University of Freiburg][uni]. I maintain the Haskell web framework [Spock][spock] and I organize [Docker Meetups in Freiburg, Germany][docker-fr].
+<img style="float: left; margin-right: 20px;" width="140" height="200" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, currently software engineer at [Stripe][stripe]. I've co-founded [TramCloud][tc] and [BahnBuddy][bb] and was software engineer at [Checkpad][cp] for 5 years. I have a BSc in computer science and am writing my master thesis at the [University of Freiburg][uni]. I maintain the Haskell web framework [Spock][spock].
 
 <br style="clear: both;" />
 
@@ -23,6 +23,7 @@ Articles about my projects and/or me.
 [tc]: https://www.tramcloud.net
 [bb]: https://www.bahn-buddy.de
 [cp]: http://www.checkpad.de
+[stripe]: https://stripe.com
 [uni]: https://www.uni-freiburg.de/
 [docker-fr]: http://www.meetup.com/de/Docker-Freiburg/
 [spock]: https://www.spock.li
