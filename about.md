@@ -10,6 +10,10 @@ permalink: /about/
 
 The Fingerprint of my GPG Signature is `26FF CFD2 4DE9 A2D2 166B  3356 B303 A2EC F7B2 1D1C`. The public key can be found [here][pubkey]
 
+## Publications
+
+* [ECIR 2018: To Cite, or Not to Cite? Detecting Citation Contexts in Text][pub-1]
+
 ## Press
 
 Articles about my projects and/or me.
@@ -20,6 +24,7 @@ Articles about my projects and/or me.
 * [Caspar Tobias Schlenk: Der Legaltech-Hype geht weiter – dieses Startup hilft verspäteten Bahnfahrern, auf: gruenderszene.de (2016)][bb-founder] (German)
 * [Sabine Elsässer: Bahnverspätung Bahn-Buddy holt dein Geld zurück, auf: startupvalley.news (2016)][bb-startup] (German)
 
+[pub-1]: https://link.springer.com/chapter/10.1007%2F978-3-319-76941-7_50
 [tc]: https://www.tramcloud.net
 [bb]: https://www.bahn-buddy.de
 [cp]: http://www.checkpad.de
