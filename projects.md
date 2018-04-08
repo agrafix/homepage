@@ -14,7 +14,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [TabDo][tabdo]
 
 ### As Employee
-* [Stripe Subscriptions][stripe-subs]
+* [Stripe Billing][stripe-billing]
 * [Checkpad][cpmed]
 * [Factis][factis]
 
@@ -49,4 +49,4 @@ This is a non exhaustive list of projects I am working on or have worked on.
 [cpmed]: http://cpmed.de
 [factis]: http://factis.de/
 [twlan]: http://twlan.org
-[stripe-subs]: https://stripe.com/subscriptions
+[stripe-billing]: https://stripe.com/billing
