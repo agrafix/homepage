@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-<img style="float: left; margin-right: 20px;" width="140" height="200" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, currently software engineer at [Stripe][stripe]. I've co-founded [TramCloud][tc] and [BahnBuddy][bb] and was software engineer at [Checkpad][cp] for 5 years. I have a BSc in computer science and am writing a master thesis at the [University of Freiburg][uni]. I maintain the Haskell web framework [Spock][spock].
+<img style="float: left; margin-right: 20px;" width="140" height="200" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, currently software engineer at [Stripe][stripe]. I've co-founded [TramCloud][tc] and [BahnBuddy][bb] and was software engineer at [Checkpad][cp] writing Haskell, Objective-C and TypeScript for 5 years. I have a BSc in computer science and am writing a master thesis at the [University of Freiburg][uni]. I maintain the Haskell web framework [Spock][spock].
 
 <br style="clear: both;" />
 
@@ -14,6 +14,7 @@ The Fingerprint of my GPG Signature is `26FF CFD2 4DE9 A2D2 166B  3356 B303 A2EC
 
 * [ECIR 2018 - Michael Färber, Alexander Thiemann, Adam Jatowt: To Cite, or Not to Cite? Detecting Citation Contexts in Text][pub-1]
 * [ECIR 2018 - Michael Färber, Alexander Thiemann, Adam Jatowt: CITEWERTs: A System Combining Cite-Worthiness with Citation Recommendation][pub-2]
+* [LREC 2018 - Michael Farber, Alexander Thiemann, Adam Jatowt: A High-Quality Gold Standard for Citation-based Tasks][pub-3]
 
 Also see my [dblp search][dblp]
 
@@ -29,6 +30,7 @@ Articles/reports in the press about my projects and/or me.
 
 [pub-1]: https://link.springer.com/chapter/10.1007%2F978-3-319-76941-7_50
 [pub-2]: https://link.springer.com/chapter/10.1007/978-3-319-76941-7_82
+[pub-3]: http://www.lrec-conf.org/proceedings/lrec2018/pdf/283.pdf
 [dblp]: https://dblp.uni-trier.de/pers/hd/t/Thiemann:Alexander
 [tc]: https://www.tramcloud.net
 [bb]: https://www.bahn-buddy.de
