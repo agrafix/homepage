@@ -4,12 +4,9 @@ title: Talks
 permalink: /talks/
 ---
 
-## Upcoming
-
-* *Jul 2018*: SuperRecord: Practical Anonymous Records for Haskell at [Curry On 2018][curry-2018]
-
 ## 2018
 
+* *Jul 2018*: SuperRecord: Practical Anonymous Records for Haskell at [Curry On 2018][curry-2018] ([Video (English)][curry-2018-video])
 * *April 2018*: SuperRecord: Anonymous Records in Haskell (Short talk) [BayHac2018][bayhac-2018] ([Video (English)][bayhac-2018-video])
 
 ## 2017
@@ -50,3 +47,4 @@ permalink: /talks/
 [curry-2018]: http://curry-on.org/2018/sessions/superrecord-practical-anonymous-records-for-haskell.html
 [bayhac-2018]: https://wiki.haskell.org/BayHac2018
 [bayhac-2018-video]: https://www.youtube.com/watch?v=YLMMoYRQvS4
+[curry-2018-video]: https://www.youtube.com/watch?v=Nh0XD2hPV8w
