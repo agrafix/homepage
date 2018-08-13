@@ -10,7 +10,7 @@ permalink: /talks/
 * *April 2018*: SuperRecord: Anonymous Records in Haskell (Short talk) [BayHac2018][bayhac-2018] ([Video (English)][bayhac-2018-video])
 
 ## 2017
-* *Jul 2017*: Reflecting on 5 years of Haskell in Production at [PolyConf2017][poly-2017] ([Video (English)][poly-2017-video])
+* *Jul 2017*: Reflecting on 5 years of Haskell in Production at [PolyConf2017][poly-2017] ([Video (English)][poly-2017-video], [Video (English, Mirror)][poly-2017-video2])
 * *Feb 2017*: The Future of Front-end Development: A comparison at [BOB2017][bob-2017] ([Video (English)][bob2017-video])
 
 ## 2016
@@ -44,6 +44,7 @@ permalink: /talks/
 [bob2017-video]: https://www.youtube.com/watch?v=BZfvoW8wixU
 [poly-2017]: https://polyconf.com/
 [poly-2017-video]: https://www.youtube.com/watch?v=KlfbAneiMNw
+[poly-2017-video2]: https://www.youtube.com/watch?v=hZgW4mT1PkE
 [curry-2018]: http://curry-on.org/2018/sessions/superrecord-practical-anonymous-records-for-haskell.html
 [bayhac-2018]: https://wiki.haskell.org/BayHac2018
 [bayhac-2018-video]: https://www.youtube.com/watch?v=YLMMoYRQvS4
