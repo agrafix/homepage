@@ -105,8 +105,8 @@ The next logical step for me was to try out Elm in the real world. The frontend 
 module Lib.Api where
 
 import Http
-import Task exposing (..)
 import Json.Decode as Json exposing ((:=))
+import Task exposing (..)
 
 type alias ReferenceProfileId = Int
 
