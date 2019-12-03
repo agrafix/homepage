@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-<img style="float: left; margin-right: 20px;" width="140" height="200" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, software engineer at [Stripe][stripe]. In the past, I have co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and was software engineer at [Checkpad][cp]. I enjoy programming, especially writing leveraging typed languages like Haskell, TypeScript, Swift or PureScript. I have a bachelor's and a master's degree in computer science from the [University of Freiburg][uni]. I maintain the Haskell web framework [Spock][spock].
+<img style="float: left; margin-right: 20px;" width="140" height="200" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, software engineer at [Stripe][stripe]. In the past, I have co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and was software engineer at [Checkpad][cp]. I enjoy programming, especially leveraging typed languages like Haskell, TypeScript, Swift or PureScript. I have a bachelor's and a master's degree in computer science from the [University of Freiburg][uni]. I maintain the Haskell web framework [Spock][spock].
 
 <br style="clear: both;" />
 
