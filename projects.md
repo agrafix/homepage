@@ -8,10 +8,10 @@ This is a non exhaustive list of projects I am working on or have worked on.
 
 ## Commercial
 
-### As Founder
+### As Founder / Maker
+* [Board][board]
 * [TramCloud][tc]
-* [Bahn-Buddy][bbuddy]
-* [TabDo][tabdo]
+* [Bahn-Buddy][bbuddy] (sold)
 
 ### As Employee
 * [Stripe Billing][stripe-billing]
@@ -33,9 +33,9 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [Bean Bouncer][beanbouncer]
 * [TribalWars Lan][twlan]
 
+[board]: https://letsboard.co
 [tc]: https://www.tramcloud.net
-[bbuddy]: https://partner.bahn-buddy.de/link/7f11cebf-2b4f-47b3-a9b1-c14ffe632ddb
-[tabdo]: http://www.tabdo.net
+[bbuddy]: https://www.bahn-buddy.de
 [spock]: http://www.spock.li
 [dockercook]: https://github.com/factisresearch/dockercook
 [managerslife]: https://github.com/agrafix/managerslife
@@ -46,7 +46,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 [visitorstats]: http://visitor-stats.de
 [beanbouncer]: https://itunes.apple.com/de/app/bean-bouncer/id939456519
 [hackage]: http://hackage.haskell.org/user/AlexanderThiemann
-[cpmed]: http://cpmed.de
+[cpmed]: http://checkpad.de
 [factis]: http://factis.de/
 [twlan]: http://twlan.org
 [stripe-billing]: https://stripe.com/billing
