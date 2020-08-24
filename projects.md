@@ -10,6 +10,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 
 ### As Founder / Maker
 * [Board][board]
+* [jot away][jotaway]
 * [TramCloud][tc]
 * [Bahn-Buddy][bbuddy] (sold)
 
@@ -34,9 +35,10 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [TribalWars Lan][twlan]
 
 [board]: https://letsboard.co
+[jotaway]: https://jotaway.co
 [tc]: https://www.tramcloud.net
 [bbuddy]: https://www.bahn-buddy.de
-[spock]: http://www.spock.li
+[spock]: https://www.spock.li
 [dockercook]: https://github.com/factisresearch/dockercook
 [managerslife]: https://github.com/agrafix/managerslife
 [websocketserver]: http://websocketserver.de
