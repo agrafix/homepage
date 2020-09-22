@@ -32,7 +32,7 @@ git config --global alias.new '!git init && git commit --allow-empty -m "initial
 git submodule foreach git pull origin master
 ```
 
-## (Spac)emacs
+## Emacs
 
 ### Splitting windows
 
@@ -40,7 +40,7 @@ git submodule foreach git pull origin master
 * `C-x 3`: split into two windows, side by side
 * `C-x o`: switch to other buffer in window split
 
-### Required package `request-0.1.0` is unavailable
+### (Spacemacs only) Required package `request-0.1.0` is unavailable
 
 see [issue #4642][ghc-spacemacs-4642]
 
@@ -64,10 +64,18 @@ see [issue #4642][ghc-spacemacs-4642]
 (global-set-key (kbd "C-c d") 'duplicate-line)
 ```
 
-### Kill current line
+### Delete entire current line
 
 ```elisp
 (global-set-key (kbd "C-c f") 'kill-whole-line)
+```
+
+### Mac command key work as expected again (Mac)
+
+```elisp
+(setq mac-option-modifier 'nil)
+(setq mac-right-option-modifier 'nil)
+(mac-auto-operator-composition-mode)
 ```
 
 ## Webserver configuration
