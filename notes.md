@@ -105,7 +105,62 @@ BlockName block = ^retTy(int foo, NSString *bar) {
 @property (nonatomic, copy) BlockName myBlock;
 ```
 
-## JavaScript
+## JavaScript / TypeScript
+
+### ESLint and Prettier
+
+```bash
+npx eslint --init
+npm i --save-dev prettier eslint-config-prettier eslint-plugin-prettier
+```
+
+Next, add `prettier` to `extends` and `plugins` in the eslint config. Also, add a rule that prettier rules are reported as errors:
+
+```json
+{
+  "extends": [
+    "prettier",
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
+```
+
+Tweak the prettier config to your likings:
+
+```javascript
+module.exports = {
+  trailingComma: 'es5',
+  semi: true,
+  tabWidth: 2,
+  singleQuote: true,
+}
+```
+
+If you are using VS Code, create a file `.vscode/settings.json` with this content:
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+}
+```
+
+### Potential eslint rules to disable for use with TypeScript
+
+```json
+{
+  rules: {
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+  },
+}
+```
 
 ### Benchmarks
 
