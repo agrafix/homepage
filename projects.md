@@ -12,7 +12,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [Board][board]
 * [jot away][jotaway]
 * [TramCloud][tc]
-* [Bahn-Buddy][bbuddy] (sold)
+* [Bahn-Buddy][bbuddy] (sold to RightNow GmbH)
 
 ### As Employee
 * [Stripe Billing][stripe-billing]
@@ -48,7 +48,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 [visitorstats]: http://visitor-stats.de
 [beanbouncer]: https://itunes.apple.com/de/app/bean-bouncer/id939456519
 [hackage]: http://hackage.haskell.org/user/AlexanderThiemann
-[cpmed]: http://checkpad.de
+[cpmed]: https://www.checkpad.de
 [factis]: http://factis.de/
 [twlan]: http://twlan.org
 [stripe-billing]: https://stripe.com/billing
