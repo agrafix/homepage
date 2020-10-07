@@ -185,6 +185,18 @@ sudo systemctl restart docker.service
 #!/bin/bash -eo pipefail
 ```
 
+## Tools
+
+### Clipboard syntax highlighting (MacOS)
+
+```bash
+#!/bin/bash -eo pipefail
+
+pbpaste | pygmentize -l $1 -f rtf | pbcopy -Prefer rtf
+```
+
+Usage: `syntax.sh python`
+
 ## AWS
 
 * [EC2 Linux Troubleshooting][aws-ssh-trouble]
