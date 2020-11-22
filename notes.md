@@ -107,6 +107,9 @@ BlockName block = ^retTy(int foo, NSString *bar) {
 
 ## JavaScript / TypeScript
 
+### Install on Mac
+Use [nvm][nvm] to install and manage node & npm versions.
+
 ### ESLint and Prettier
 
 ```bash
@@ -177,6 +180,17 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker.service
 ```
 
+## Homebrew
+
+### Run on new Apple M1 ARM chip
+```bash
+# install via
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+# usage example
+arch -x86_64 brew install rocksdb
+```
+
 ## Bash
 
 ### Sane shell script
@@ -207,3 +221,4 @@ Usage: `syntax.sh python`
 [aws-ssh-trouble]: https://aws.amazon.com/de/premiumsupport/knowledge-center/ec2-linux-ssh-troubleshooting/
 [ghc-spacemacs-4642]: https://github.com/syl20bnr/spacemacs/issues/4642
 [do-nginx-letsencrypt]: https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
+[nvm]: https://github.com/nvm-sh/nvm
