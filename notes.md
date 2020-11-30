@@ -32,6 +32,16 @@ git config --global alias.new '!git init && git commit --allow-empty -m "initial
 git submodule foreach git pull origin master
 ```
 
+### xcrun: error
+
+If running into
+
+```
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+```
+
+while doing e.g. `git status` (especially after a MacOS update), re-run `xcode-select --install` or `sudo xcode-select --reset`.
+
 ## Emacs
 
 ### Splitting windows
