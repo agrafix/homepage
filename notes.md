@@ -203,6 +203,18 @@ arch -x86_64 brew install rocksdb
 
 ## Bash
 
+### Load environment from `.env` file
+
+```bash
+export $(cat .env | xargs) && my-program
+```
+
+### Get scripts directory
+
+```bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+```
+
 ### Sane shell script
 
 ```bash
