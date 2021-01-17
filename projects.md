@@ -8,18 +8,18 @@ This is a non exhaustive list of projects I am working on or have worked on.
 
 ## Commercial
 
+### As Employee
+* [Stripe Billing][stripe-billing]
+* [Checkpad][cpmed]
+* [Factis][factis]
+
 ### As Founder / Maker
 * [Board][board]
 * [jot away][jotaway]
 * [TramCloud][tc]
 * [Bahn-Buddy][bbuddy] (sold to RightNow GmbH)
 
-### As Employee
-* [Stripe Billing][stripe-billing]
-* [Checkpad][cpmed]
-* [Factis][factis]
-
-## OpenSource
+## Open Source
 * [Spock][spock]
 * [dockercook][dockercook]
 * [WebSocketServer][websocketserver]
@@ -28,9 +28,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * ...and many [more][github]
 
 ## Fun
-* [Visitor Stats][visitorstats]
 * [ReTi simulator][reti]
-* [Die Stämme Tools][dstools]
 * [Bean Bouncer][beanbouncer]
 * [TribalWars Lan][twlan]
 

@@ -10,9 +10,7 @@
         </ul>
         <ul class="contact-list">
             <li><a href="https://letsboard.co">letsboard.co</a></li>
-            <li><a href="https://jotaway.co">jotaway.co</a></li>
-            <li><a href="https://thitp.de">Dr. Peter &amp; Alexander Thiemann GbR</a></li>
-          <li><a href="https://tramcloud.net">TramCloud GmbH</a></li>
+            <li><a href="https://jotaway.co">jotaway.co</a></li>            
         </ul>
       </div>
 
@@ -50,10 +48,13 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-          <p class="text">{{ site.description }}</p>
+          <p class="text">
+            {{ site.description }}<br />
+            <i>Opinions are my own.</i>
+          </p>
           <ul class="contact-list">
-              <li><a href="{{ "/notes" | prepend: site.baseurl }}">My (technical) notes</a></li>
-              <li><a href="https://uni.athiemann.net">My university notes (archive)</a></li>
+              <li><a href="{{ "/notes" | prepend: site.baseurl }}">Technical notes</a></li>
+              <li><a href="https://uni.athiemann.net">University notes archive</a></li>
           </ul>
       </div>
     </div>

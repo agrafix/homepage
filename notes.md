@@ -4,6 +4,8 @@ title: Mostly technical notes
 permalink: /notes/
 ---
 
+This is a collection of random technical notes that I've accumulated over time.
+
 ## Git
 
 ```bash

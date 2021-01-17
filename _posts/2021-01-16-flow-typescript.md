@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "# Flow vs. TypeScript: A Real-World Case Study"
+title:  "Flow vs. TypeScript: A Real-World Case Study"
 date:   2021-01-16 23:30:00
 ---
 
