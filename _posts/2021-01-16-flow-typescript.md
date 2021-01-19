@@ -4,7 +4,7 @@ title:  "Flow vs. TypeScript: A Real-World Case Study"
 date:   2021-01-16 23:30:00
 ---
 
-This week I was reviewing a pull request and the author had disabled [Flow type-checking](https://flow.org/) for a specific line via `$FlowDisableLine`. Since the code was in a central location, we decided to investigate how we'd need to restructure the code for a type-safe version.
+This week I was reviewing a pull request and the author had disabled [Flow type-checking](https://flow.org/) for a specific line via `$FlowDisableLine`. Since the code was in a central location, we decided to investigate how we'd need to restructure the code for a type-safe version. Spoiler alert: TypeScript didn't error on the code at hand.
 
 A simplified version of the code:
 
@@ -82,7 +82,7 @@ Hence, the type the type checker considers for `form` doesn't match up with what
 
 ## The Fix
 
-To fix this, we needed to copy `user` in our `formToRequest` implementation:
+To fix this, we need to copy `user` in our `formToRequest` implementation:
 
 ```javascript
 function formToRequest(type: 'create' | 'update', form: Form): MyRequest {
@@ -125,10 +125,10 @@ This wasn't an option in our case since `CreateRequest` and `UpdateRequest` are 
 
 It took the author and me a while to understand this -- it's not easy to reason through since the error only becomes apparent when considering how the function could be called. 
 
-To contrast Flow with [TypeScript](https://www.typescriptlang.org/), TypeScript (as of v4.1.3) doesn't consider the original code invalid. This is [by design](https://www.typescriptlang.org/docs/handbook/type-compatibility.html) and wouldn't have produced any errors.
+To contrast Flow with [TypeScript](https://www.typescriptlang.org/), TypeScript (as of v4.1.3) doesn't consider the original code invalid. This is [by design](https://www.typescriptlang.org/docs/handbook/type-compatibility.html).
 
 Did TypeScript make the right call? I think it depends. 
 
 In some code bases, object property mutation like `request.payload.user.name = undefined;` is banned via ESLint requiring making an updated copy of the object. With that setting in mind, TypeScript would have saved us quite a bit of time with similar safety guarantees. 
 
-Without ESLint, considering that ESLint can (and will be) disabled for certain pieces of code or third party libraries that don't follow this ESLint configuration, Flow is certainly going to catch more errors before they hit production.
+Without ESLint, or considering that ESLint can (and will be) disabled for certain pieces of code, or third party libraries that don't follow this ESLint configuration, Flow is certainly going to catch more errors before they hit production.
