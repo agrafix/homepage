@@ -4,7 +4,9 @@ title:  "Flow vs. TypeScript: A Real-World Case Study"
 date:   2021-01-16 23:30:00
 ---
 
-This week I was reviewing a pull request and the author had disabled [Flow type-checking](https://flow.org/) for a specific line via `$FlowDisableLine`. A simplified version of the code:
+This week I was reviewing a pull request and the author had disabled [Flow type-checking](https://flow.org/) for a specific line via `$FlowDisableLine`. Since the code was in a central location, we decided to investigate how we'd need to restructure the code for a type-safe version.
+
+A simplified version of the code:
 
 ```javascript
 /* @flow */
@@ -55,7 +57,7 @@ References:
 
 At first sight, this seemed odd: the `UpdateRequest` type allows the `user.name` field to be `undefined` or a `string` and `user.name` in `Form` is a `string`, so why does flow complain about this?
 
-Since disabling flow causes the loss of type-safety in how (in this example) API calls are constructed, I wanted to investigate this deeper.
+Since disabling flow causes the loss of type-safety in how (in this example) API calls are constructed, we wanted to take a closer look.
 
 ## References and Mutability
 
