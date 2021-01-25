@@ -1,5 +1,5 @@
 FROM ruby:2.7.2
-COPY Gemfile Gemfile.lock _config.yml /work/build/Gemfile/
+COPY Gemfile Gemfile.lock _config.yml /work/build/
 WORKDIR /work/build
 RUN bundle install
 COPY . /work/build
