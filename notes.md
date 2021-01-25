@@ -22,7 +22,7 @@ git checkout -b new-branch
 git branch -d new-branch
 
 # add single hunk from a file
-git add --patch
+git add -p
 
 # push the current branch
 git push origin HEAD
@@ -32,6 +32,10 @@ git config --global alias.new '!git init && git commit --allow-empty -m "initial
 
 # update all submodules
 git submodule foreach git pull origin master
+
+# create and apply patches
+git format-patch -1 <commit-sha>
+git am <patch-file>
 ```
 
 ### xcrun: error
