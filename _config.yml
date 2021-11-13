@@ -11,9 +11,6 @@ linkedin_username: alexander-thiemann
 
 exclude: [vendor, Gemfile, .travis.yml, deploy_rsa.enc, deploy_rsa, Dockerfile]
 
-collections:
-  - notes
-
 # Build settings
 markdown: kramdown
 
