@@ -2,6 +2,7 @@
 layout: post
 title:  "DIY: Haskell docs"
 date:   2016-09-01 15:00:00
+tags:   blog
 ---
 
 Recently, I wanted to make sure that the generated API documentation for my web framework [Spock][spock] is always available (on the web) and up to date, both with the current release and with the current `master` branch.

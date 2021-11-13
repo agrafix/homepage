@@ -1,0 +1,22 @@
+---
+layout: default
+title: Mostly technical notes
+permalink: /notes/
+---
+
+<div class="home">
+
+  <h1 class="page-heading">Notes</h1>
+
+  <p>
+    This is a collection of random technical notes that I've accumulated over time.
+  </p>
+
+  <ul class="notes-list">
+    {% for post in site.tags.note %}
+    <li>
+      <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

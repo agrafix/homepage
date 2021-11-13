@@ -2,6 +2,7 @@
 layout: post
 title:  "Making the Most of Code Review"
 date:   2021-01-18 23:30:00
+tags:   blog
 ---
 
 Code review is one of the most important tools for successful collaboration on large code bases. It's an easy way to learn from each other and maintain a high code quality bar.

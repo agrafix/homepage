@@ -2,6 +2,7 @@
 layout: post
 title:  "Flow vs. TypeScript: A Real-World Case Study"
 date:   2021-01-16 23:30:00
+tags:   blog
 ---
 
 This week I was reviewing a pull request and the author had disabled [Flow type-checking](https://flow.org/) for a specific line via `$FlowDisableLine`. Since the code was in a central location, we decided to investigate how we'd need to restructure the code for a type-safe version. Spoiler alert: TypeScript didn't error on the code at hand.

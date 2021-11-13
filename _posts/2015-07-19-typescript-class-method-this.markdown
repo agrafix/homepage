@@ -2,6 +2,7 @@
 layout: post
 title:  "TypeScript and 'this' in class methods"
 date:   2015-07-19 14:09:35
+tags:   blog
 ---
 
 At [Checkpad][cp] we are moving JavaScript code to [TypeScript][ts]. Apart from some initial "take-off" issues like finding, modifying and/or writing missing [.d.ts files][dts] for libraries, or getting our build pipeline to work, the process was pretty smooth. A few months into that, I've discovered some road bumps and will share one today.

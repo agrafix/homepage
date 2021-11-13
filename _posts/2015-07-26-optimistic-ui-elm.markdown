@@ -2,6 +2,7 @@
 layout: post
 title:  "Optimistic UI and Reactive Programming with Elm"
 date:   2015-07-26 13:18:00
+tags:   blog
 ---
 
 I'm still on the hunt for "the right" programming language for web front-ends. JavaScript is fun and very good for quickly hacking together something, but as soon as your project grows you either need a large number of tests and discipline or your going to break something with every refactoring. TypeScript seemed like a good rescue - but coming from Haskell I have high standards for type systems and the TypeScript one still has [loop holes][ts-this]. The other problem with both languages is, that you are responsible for managing and syncing your state and model correctly. [React][react-js] and [other][rxjs] [frameworks][ember] help you with this, but you still have to use them [correctly][flux] and there's always a way to sneak around. [Elm][elm] to the rescue? Let's see!

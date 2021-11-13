@@ -2,6 +2,7 @@
 layout: post
 title:  "SuperRecord: Anonymous Records for Haskell"
 date:   2017-07-02 18:00:00
+tags:   blog
 ---
 
 Many mainstream Haskell programs that reach a certain size need to solve at least two core problems. First, all your logic will run in some kind of environment that provides logging, configuration, other external data such as templates and/or some global application state. This environment must be managed somehow and correctly be passed to the specific logic. Secondly, you will need to read and write out data into the real world, for example, to talk to a JSON REST-API. Let's take a look in detail at these problems and how we can solve them today.

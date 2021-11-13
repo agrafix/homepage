@@ -2,6 +2,7 @@
 layout: post
 title:  "Type Level Merge Sort (Haskell)"
 date:   2017-08-31 11:00:00
+tags:   blog
 ---
 
 The recently presented Haskell library [superrecord][superrecord] is still under heavy development and making great progress. While working on it we noticed that application code using the library would become very slow to compile when the record size exceeded 10 fields. Without any deeper thought, I guessed that the current type level insertion sort (which is `O(n^2)` in worse case complexity) was at fault. This turned out to be wrong, but I still implemented a more efficient merge sort at type level and would like to share the journey as it was quite fun.

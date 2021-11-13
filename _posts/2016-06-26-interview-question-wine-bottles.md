@@ -3,6 +3,7 @@ layout: post
 title:  "Interview Question: Wine Bottles"
 date:   2016-06-26 10:30:00
 use_math: true
+tags:   blog
 ---
 
 A popular puzzle interview question goes like this: "Sir Blake has 200 bottles of wine in his wine cellar. 99% of those bottles are red wine and 1% of them are white wine. How many bottles of red and/or white wine does Sir Blake need to drink to reduce the percentage of red wine to 98%?"

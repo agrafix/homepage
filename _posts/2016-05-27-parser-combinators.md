@@ -2,6 +2,7 @@
 layout: post
 title:  "Parser Combinators"
 date:   2016-05-27 23:30:00
+tags:   blog
 ---
 
 Today we will explore how to build a small parser combinator library in Haskell from scratch. This blog post is the result of an experiment to see if I could actually implement this by only looking at the [base][hackage-base] and [text][hackage-text] documentation, explicitly without looking at other parser implementations or examples.
