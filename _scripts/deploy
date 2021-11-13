@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+echo "Rebuilding everything ..."
+"$SCRIPT_DIR"/cibuild
+
+echo "Sending it up ..."
+rsync -r --delete-after --quiet "$SCRIPT_DIR/../_site" deploy@163.172.179.32:site
+
+echo "Done!"
