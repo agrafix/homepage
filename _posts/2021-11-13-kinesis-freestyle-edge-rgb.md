@@ -17,3 +17,31 @@ I noticed that after plugging in my keyboard it was unresponsive for about 30 se
  3. Mount the V-Drive with [SmartSet+F8] and rename it back to _FS EDGE RGB_.
  4. Move the layout files from the backup back into the `layouts/` folder.
  5. Eject the V-Drive and immediately dismount it with [SmartSet+F8].
+
+# manual programming
+
+[full instructions](https://www.7day.nl/ergowerken/Kinesis/edge/programming-guide.pdf)
+
+- Use (gear)+F8 to mount vdrive
+- Then edit the files below
+- Then eject and quickly press (gear)+F8 again
+
+
+## layout 
+
+`layouts/layout1.txt` (mac layout)
+
+```
+[lwin]>[lalt]
+[lalt]>[lwin]
+[ralt]>[rwin]
+```
+
+## lightning
+
+`lighting/led1.txt` (white > blue) 
+
+```
+[mono]>[255][255][255]
+fn [mono]>[0][0][255]
+```
