@@ -100,7 +100,7 @@ One way to solve these problems can be via anonymous records. Let's take a look.
 
 ## Anonymous records
 
-An anonymous record is similar to a `data` type, but instead of defining it up front with a `data` declaration we can declare/use it on the fly. Here's an example from the proposed Haskell [superrecord[superrecord] package which implements the idea of anonymous records:
+An anonymous record is similar to a `data` type, but instead of defining it up front with a `data` declaration we can declare/use it on the fly. Here's an example from the proposed Haskell [superrecord][superrecord] package which implements the idea of anonymous records:
 
 {% highlight haskell %}
 person =
@@ -113,7 +113,7 @@ The type of person is `person :: Rec '["name" := String, "age" := Int]`. This ba
 
 {% highlight haskell %}
 data Person = Person { name :: String, age :: Int }
-person = Person { name = "Alex", age = 23 }
+person = Person { name = "Alex", age = 23 }
 {% endhighlight %}
 
 On trivial example why the first representation is beneficial is that we can write a function that requires at least a field `name`:
@@ -123,11 +123,11 @@ greet :: Has "name" r String => Rec r -> String
 greet r = "Hello " ++ get #name r
 {% endhighlight %}
 
-where the `Has "name" r String` constraint means: "The record of type `Rec r` must have a field `name` of value `String`".. This function can work on many values like:
+where the `Has "name" r String` constraint means: "The record of type `Rec r` must have a field `name` of value `String`". This function can work on many values like:
 
 {% highlight haskell %}
 person = #name := "Alex" & #age = 23 & rnil
-person2 = #name := "Laura" & rnil
+person2 = #name := "Hans" & rnil
 person3 = #favoriteColor := "green" & #name = "Dorothee" & rnil
 {% endhighlight %}
 
