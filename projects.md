@@ -14,6 +14,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [Factis][factis]
 
 ### As Founder / Maker
+* [vindex][vindex]
 * [Supportpage.io][supportpage]
 * [Board][board]
 * [jot away][jotaway]
@@ -33,6 +34,7 @@ This is a non exhaustive list of projects I am working on or have worked on.
 * [Bean Bouncer][beanbouncer]
 * [TribalWars Lan][twlan]
 
+[vindex]: https://vindex.ai
 [supportpage]: https://supportpage.io
 [board]: https://letsboard.co
 [jotaway]: https://jotaway.co
