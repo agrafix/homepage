@@ -7,6 +7,6 @@ echo "Rebuilding everything ..."
 "$SCRIPT_DIR"/cibuild
 
 echo "Sending it up ..."
-rsync -r --delete-after --quiet "$SCRIPT_DIR/../_site" deploy@163.172.179.32:site
+rsync -r --delete-after --progress --checksum "$SCRIPT_DIR/../_site/" priv-page:/var/www/athiemann.net
 
 echo "Done!"
