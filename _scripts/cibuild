@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+ROOT_DIR="$SCRIPT_DIR/.."
+
+# Prefer Homebrew Ruby if available so we can use the Bundler version in Gemfile.lock.
+if [[ -x /opt/homebrew/opt/ruby/bin/ruby ]]; then
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+elif [[ -x /usr/local/opt/ruby/bin/ruby ]]; then
+  export PATH="/usr/local/opt/ruby/bin:$PATH"
+fi
+
+cd "$ROOT_DIR"
+
+bundle check >/dev/null 2>&1 || bundle install
 bundle exec jekyll build
