@@ -1,4 +1,4 @@
-FROM ruby:2.7.2
+FROM ruby:4.0.1
 COPY Gemfile Gemfile.lock _config.yml /work/build/
 WORKDIR /work/build
 RUN bundle install
