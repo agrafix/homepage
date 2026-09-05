@@ -1,0 +1,47 @@
+// The artwork lives behind the introduction and fades before the writing.
+.background-art {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 690px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 79% 30%, rgba(138, 222, 216, 0.19), transparent 44%),
+        radial-gradient(ellipse at 98% 14%, rgba(165, 176, 241, 0.2), transparent 36%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, $background-color 5%, rgba($background-color, 0.94) 28%, rgba($background-color, 0.3) 54%, rgba($background-color, 0) 70%);
+    }
+
+    canvas,
+    svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    svg { opacity: 0.45; }
+    &.is-ready svg { display: none; }
+}
+
+@include media-query($on-palm) {
+    .background-art {
+        height: 630px;
+        opacity: 0.75;
+
+        &::after {
+            background: linear-gradient(90deg, rgba($background-color, 0.97), rgba($background-color, 0.78) 42%, rgba($background-color, 0.15));
+        }
+    }
+}
+
+@media print {
+    .background-art { display: none; }
+}

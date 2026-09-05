@@ -4,12 +4,13 @@
 @charset "utf-8";
 
 @font-face {
-    font-family: 'charterbold_italic';
+    font-family: 'charterregular';
     src: url('../fonts/charter_bold_italic-webfont.eot');
     src: url('../fonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/charter_bold_italic-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
 
 }
 
@@ -17,12 +18,13 @@
 
 
 @font-face {
-    font-family: 'charterbold';
+    font-family: 'charterregular';
     src: url('../fonts/charter_bold-webfont.eot');
     src: url('../fonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/charter_bold-webfont.woff') format('woff');
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
+    font-display: swap;
 
 }
 
@@ -30,12 +32,13 @@
 
 
 @font-face {
-    font-family: 'charteritalic';
+    font-family: 'charterregular';
     src: url('../fonts/charter_italic-webfont.eot');
     src: url('../fonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/charter_italic-webfont.woff') format('woff');
     font-weight: normal;
-    font-style: normal;
+    font-style: italic;
+    font-display: swap;
 
 }
 
@@ -49,27 +52,29 @@
          url('../fonts/charter_regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 
 }
 
 // Our variables
 $base-font-family: charterregular, Helvetica, Arial, sans-serif;
+$ui-font-family:   -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 $base-font-size:   18px;
 $small-font-size:  $base-font-size * 0.875;
-$base-line-height: 1.5;
+$base-line-height: 1.65;
 
 $spacing-unit:     30px;
 
-$text-color:       #111;
-$background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
+$text-color:       #233c40;
+$background-color: #f5faf9;
+$brand-color:      #087783;
 
-$grey-color:       #828282;
-$grey-color-light: lighten($grey-color, 40%);
-$grey-color-dark:  darken($grey-color, 25%);
+$grey-color:       #587075;
+$grey-color-light: #dce8e6;
+$grey-color-dark:  #294449;
 
 // Width of the content area
-$content-width:    800px;
+$content-width:    1020px;
 
 $on-palm:          600px;
 $on-laptop:        800px;
@@ -95,5 +100,6 @@ $on-laptop:        800px;
 @import
         "base",
         "layout",
+        "background-art",
         "syntax-highlighting"
 ;

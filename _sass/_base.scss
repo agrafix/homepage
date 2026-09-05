@@ -14,6 +14,8 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
+    position: relative;
+    min-height: 100vh;
     font-family: $base-font-family;
     font-size: $base-font-size;
     line-height: $base-line-height;
@@ -21,8 +23,34 @@ body {
     color: $text-color;
     background-color: $background-color;
     -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(ellipse at 100% 0%, rgba(179, 225, 235, 0.22), transparent 650px);
 }
 
+::selection {
+    background: #beece3;
+    color: #153f46;
+}
+
+:focus-visible {
+    outline: 2px solid $brand-color;
+    outline-offset: 5px;
+    border-radius: 2px;
+}
+
+.skip-link {
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    z-index: 10;
+    padding: 8px 16px;
+    background: $background-color;
+    transform: translateY(-200%);
+
+    &:focus {
+        transform: translateY(0);
+    }
+}
 
 
 /**
@@ -91,6 +119,8 @@ h1, h2, h3, h4, h5, h6 {
 a {
     color: $brand-color;
     text-decoration: none;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
 
     &:visited {
         color: darken($brand-color, 15%);
@@ -112,7 +142,6 @@ blockquote {
     border-left: 4px solid $grey-color-light;
     padding-left: $spacing-unit / 2;
     font-size: 18px;
-    letter-spacing: -1px;
     font-style: italic;
 
     > :last-child {
@@ -130,7 +159,7 @@ code {
     font-size: 15px;
     border: 1px solid $grey-color-light;
     border-radius: 3px;
-    background-color: #eef;
+    background-color: #eaf2f2;
 }
 
 code {

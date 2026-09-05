@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   {% include head.html %}
 
-  <body>
+  <body{% if page.art_background %} class="has-art-background"{% endif %}>
+
+    {% if page.art_background %}
+      {% include background-art.html %}
+    {% endif %}
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
     {% include header.html %}
 
-    <div class="page-content">
+    <main class="page-content" id="main-content">
       <div class="wrapper">
         {{ content }}
       </div>
-    </div>
+    </main>
 
     {% include footer.html %}
 

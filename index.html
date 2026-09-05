@@ -1,25 +1,35 @@
 ---
 layout: default
+art_background: true
 ---
 
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <section class="home-intro" aria-labelledby="intro-heading">
+    <p class="eyebrow">Software &amp; other curiosities</p>
+    <h1 id="intro-heading">(functional)<br>programming <em>&amp; more.</em></h1>
+    <p class="home-intro-text">I'm Alexander, a software engineer in San Francisco.<br> Here are a few things I've been thinking about.</p>
+  </section>
+
+  <div class="section-heading">
+    <h2 class="page-heading">Posts</h2>
+    <a class="rss-link" href="{{ '/feed.xml' | prepend: site.baseurl }}">Follow via RSS <span aria-hidden="true">↗</span></a>
+  </div>
 
   <ul class="post-list">
     {% for post in site.tags.blog %}
     <li>
-      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <time class="post-meta" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
 
-      <h2>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      </h2>
+      <div class="post-summary">
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }} <span class="post-arrow" aria-hidden="true">↗</span></a>
+        </h2>
 
-      <div>{{ post.excerpt }}</div>
+        <div class="post-excerpt">{{ post.excerpt }}</div>
+      </div>
     </li>
     {% endfor %}
   </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ " /feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
 </div>
