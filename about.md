@@ -4,9 +4,9 @@ title: About
 permalink: /about/
 ---
 
-<img style="float: left; margin-right: 20px;" width="180" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann working at [Stripe][stripe] on [Stripe Billing][stripe-billing]. 
+<img style="float: left; margin-right: 20px;" width="180" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, a principal software engineer at [Stripe][stripe] in San Francisco. My work includes [Stripe Billing][stripe-billing] and [Stripe Projects][stripe-projects].
 
-In the past, I have co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and was software engineer at [Checkpad MED][cp]. 
+Previously, I co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and worked as a software engineer at [Checkpad MED][cp].
 
 I enjoy programming -- particularly in [Haskell](https://haskell.org). I have a bachelor's and a master's degree in computer science from the [University of Freiburg][uni]. On the weekend you can catch me playing tennis on one of San Francisco's beautiful public tennis courts. 
 
@@ -41,6 +41,7 @@ Articles/reports in the press about my projects and/or me:
 [cp]: http://www.checkpad.de
 [stripe]: https://stripe.com
 [stripe-billing]: https://stripe.com/billing
+[stripe-projects]: https://projects.dev
 [uni]: https://www.uni-freiburg.de/
 [docker-fr]: http://www.meetup.com/de/Docker-Freiburg/
 [spock]: https://www.spock.li

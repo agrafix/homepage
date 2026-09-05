@@ -4,6 +4,10 @@ title: Talks
 permalink: /talks/
 ---
 
+## 2026
+
+* *Mar 2026*: Using Domain Driven Design to Refactor Stripe Billing at [BOB 2026][bob-2026] ([Video (English)][bob-2026-video])
+
 ## 2018
 
 * *Jul 2018*: SuperRecord: Practical Anonymous Records for Haskell at [Curry On 2018][curry-2018] ([Video (English)][curry-2018-video])
@@ -27,6 +31,8 @@ permalink: /talks/
 * *Jul:* Introduction to dockercook at [First Docker Meetup Frankfurt][docker-2014-07]
 * *Sept:* Introduction to docker at [First Docker Meetup Freiburg][docker-2014-09]
 
+[bob-2026]: https://bobkonf.de/2026/alex-thiemann.html
+[bob-2026-video]: https://media.ccc.de/v/bob11-2026-ddd-stripe-billing-thiemann
 [bob-2017]: http://bobkonf.de/2017/athiemann.html
 [docker-2014-07]: http://www.meetup.com/de/Docker-Frankfurt/events/182122512/
 [docker-2014-09]: http://www.meetup.com/de/Docker-Freiburg/events/198908842/
