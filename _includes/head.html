@@ -7,6 +7,7 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
+  <link rel="preload" href="{{ '/fonts/charter_regular-webfont.woff' | prepend: site.baseurl }}" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   {% if page.art_background %}
     <script src="{{ '/js/background-art.js' | prepend: site.baseurl }}" defer></script>

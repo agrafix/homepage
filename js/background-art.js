@@ -11,12 +11,12 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const duration = 4800;
   const lineCount = 22;
-  const samples = 84;
+  const samples = 180;
+  const strokeWidth = 0.85;
   const palette = ['#42a99e', '#4eafbe', '#698cca', '#9690d0'];
   let width = 0;
   let height = 0;
   let lines = [];
-  let pixels = [];
   let frame = null;
   let startedAt = null;
   let elapsed = 0;
@@ -66,66 +66,86 @@
   function compose() {
     const random = randomSource();
     lines = [];
-    pixels = [];
 
     for (let index = 0; index < lineCount; index += 1) {
       const points = [];
+      const path = new Path2D();
       const color = palette[Math.min(palette.length - 1, Math.floor(index / lineCount * palette.length))];
+      const size = 3 + random() * 1.5;
+      let length = 0;
+      let entryDistance = 0;
 
       for (let sample = 0; sample <= samples; sample += 1) {
-        const t = sample / samples;
-        const target = pointOnLine(t, index);
-        points.push(target);
-
-        if (sample % 3 !== 0) continue;
-        pixels.push({
-          target,
-          x: target.x + (random() - 0.5) * 350,
-          y: target.y + (random() - 0.5) * 270,
-          phase: random() * Math.PI * 2,
-          size: 1.5 + random() * 3,
-          opacity: 0.22 + random() * 0.38,
-          delay: random() * 0.12,
-          color
-        });
+        const point = pointOnLine(sample / samples, index);
+        if (sample === 0) path.moveTo(point.x, point.y);
+        else {
+          const previous = points[sample - 1];
+          length += Math.hypot(point.x - previous.x, point.y - previous.y);
+          path.lineTo(point.x, point.y);
+        }
+        points.push({ ...point, distance: length });
+        if (point.y < -size) entryDistance = length;
       }
 
-      lines.push({ points, color, opacity: 0.25 + random() * 0.17 });
+      lines.push({
+        points, path, length, entryDistance, color, size,
+        opacity: 0.25 + random() * 0.17,
+        delay: 40 + index * 11 + random() * 300
+      });
     }
+  }
+
+  // Position the drawing tip by distance, so the bends do not cause speed jumps.
+  function pointAtDistance(points, distance) {
+    let low = 1;
+    let high = points.length - 1;
+    while (low < high) {
+      const middle = Math.floor((low + high) / 2);
+      if (points[middle].distance < distance) low = middle + 1;
+      else high = middle;
+    }
+    const before = points[low - 1];
+    const after = points[low];
+    const amount = clamp((distance - before.distance) / (after.distance - before.distance));
+    return {
+      x: mix(before.x, after.x, amount),
+      y: mix(before.y, after.y, amount),
+      angle: Math.atan2(after.y - before.y, after.x - before.x)
+    };
   }
 
   function draw(progress) {
     context.clearRect(0, 0, width, height);
+    context.lineWidth = strokeWidth;
 
-    const lineOpacity = ease((progress - 0.32) / 0.62);
-    if (lineOpacity > 0) {
-      context.lineWidth = 0.85;
-      lines.forEach(line => {
-        context.strokeStyle = line.color;
-        context.globalAlpha = line.opacity * lineOpacity;
-        context.beginPath();
-        line.points.forEach((point, index) => {
-          if (index === 0) context.moveTo(point.x, point.y);
-          else context.lineTo(point.x, point.y);
-        });
-        context.stroke();
-      });
-    }
+    lines.forEach(line => {
+      const travel = clamp((progress * duration - line.delay) / (duration - 700));
+      if (travel === 0) return;
 
-    if (progress < 1) {
-      const fade = 1 - ease((progress - 0.68) / 0.32);
-      pixels.forEach(pixel => {
-        const gather = ease((progress - 0.1 - pixel.delay) / (0.7 - pixel.delay));
-        const drift = (1 - gather) * 12;
-        const x = mix(pixel.x, pixel.target.x, gather) + Math.sin(progress * 5 + pixel.phase) * drift;
-        const y = mix(pixel.y, pixel.target.y, gather) + Math.cos(progress * 4 + pixel.phase) * drift;
-        const size = pixel.size * (1 - gather * 0.45);
-        context.fillStyle = pixel.color;
-        context.globalAlpha = pixel.opacity * fade;
-        context.fillRect(x - size / 2, y - size / 2, size, size);
-      });
-    }
+      // Each square enters from above and draws its own line as it descends.
+      // The stroke and its tip share one distance; there is no separate fade-in.
+      const distance = mix(line.entryDistance, line.length, ease(travel));
+      context.strokeStyle = line.color;
+      context.globalAlpha = line.opacity;
+      context.setLineDash(travel === 1 ? [] : [distance, line.length + 1]);
+      context.stroke(line.path);
 
+      if (travel < 1) {
+        const tip = pointAtDistance(line.points, distance);
+        const morph = ease((travel - 0.4) / 0.45);
+        const tipLength = mix(line.size, 14, morph);
+        const tipWidth = mix(line.size, strokeWidth, morph);
+        context.save();
+        context.translate(tip.x, tip.y);
+        context.rotate(tip.angle);
+        context.fillStyle = line.color;
+        context.globalAlpha = mix(0.6, line.opacity, morph);
+        context.fillRect(-tipLength / 2, -tipWidth / 2, tipLength, tipWidth);
+        context.restore();
+      }
+    });
+
+    context.setLineDash([]);
     context.globalAlpha = 1;
   }
 

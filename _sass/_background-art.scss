@@ -2,7 +2,10 @@
 .background-art {
     position: absolute;
     inset: 0 0 auto;
+    width: 100%;
     height: 690px;
+    // The high-DPI drawing buffer must never influence the page's width.
+    contain: strict;
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
@@ -21,9 +24,11 @@
 
     canvas,
     svg {
+        display: block;
         position: absolute;
         inset: 0;
         width: 100%;
+        max-width: 100%;
         height: 100%;
     }
 
