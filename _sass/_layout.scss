@@ -87,21 +87,9 @@
     }
 
     em {
-        display: inline-block;
         font-weight: normal;
         color: $brand-color;
-        white-space: nowrap;
     }
-}
-
-.eyebrow {
-    margin-bottom: 24px;
-    font-family: $ui-font-family;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $brand-color;
 }
 
 .home-intro-text {
@@ -315,12 +303,6 @@
             line-height: 1.13;
             letter-spacing: -1.8px;
         }
-    }
-
-    .eyebrow {
-        font-size: 9px;
-        letter-spacing: 1.6px;
-        margin-bottom: 20px;
     }
 
     .home-intro-text {
