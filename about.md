@@ -6,7 +6,7 @@ permalink: /about/
 
 <img style="float: left; margin-right: 20px;" width="180" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, a member of technical staff at [OpenAI][openai] in San Francisco.
 
-Previously, I worked as a principal software engineer at [Stripe][stripe] in San Francisco on the Revenue Suite ([Stripe Billing][stripe-billing], Stripe Tax, Stripe Revenue Recognition) and [Stripe Projects][stripe-projects].
+Previously, I worked as a principal software engineer at [Stripe][stripe] on the Revenue Suite ([Stripe Billing][stripe-billing], Stripe Tax, Stripe Revenue Recognition) and [Stripe Projects][stripe-projects].
 
 Before that, I co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and worked as a software engineer at [Checkpad MED][cp].
 
