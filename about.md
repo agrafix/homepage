@@ -4,13 +4,15 @@ title: About
 permalink: /about/
 ---
 
-<img style="float: left; margin-right: 20px;" width="180" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, a principal software engineer at [Stripe][stripe] in San Francisco. My work includes [Stripe Billing][stripe-billing] and [Stripe Projects][stripe-projects].
+<img style="float: left; margin-right: 20px;" width="180" src="/images/2016-01-28-thiemann-wwdc.jpg"> I'm Alexander Thiemann, a member of technical staff at [OpenAI][openai] in San Francisco.
 
-Previously, I co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and worked as a software engineer at [Checkpad MED][cp].
+Previously, I worked as a principal software engineer at [Stripe][stripe] in San Francisco on the Revenue Suite ([Stripe Billing][stripe-billing], Stripe Tax, Stripe Revenue Recognition) and [Stripe Projects][stripe-projects].
+
+Before that, I co-founded [TramCloud][tc] and [BahnBuddy][bb] (sold to RightNow GmbH) and worked as a software engineer at [Checkpad MED][cp].
 
 I enjoy programming -- particularly in [Haskell](https://haskell.org). I have a bachelor's and a master's degree in computer science from the [University of Freiburg][uni]. On the weekend you can catch me playing tennis on one of San Francisco's beautiful public tennis courts. 
 
-Feel free to reach out at [mail@athiemann.net](mailto:mail@athiemann.net).
+Feel free to reach out at [alexander@athiemann.com](mailto:alexander@athiemann.com).
 
 <span style="clear: both;" />
 
@@ -39,6 +41,7 @@ Articles/reports in the press about my projects and/or me:
 [tc]: https://www.tramcloud.net
 [bb]: https://www.bahn-buddy.de
 [cp]: http://www.checkpad.de
+[openai]: https://openai.com
 [stripe]: https://stripe.com
 [stripe-billing]: https://stripe.com/billing
 [stripe-projects]: https://projects.dev
